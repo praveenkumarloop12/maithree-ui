@@ -44,7 +44,7 @@
             <div>
                 <label>Selected : </label>
                 <div *ngFor="let branch of this.productRequest.branchDetails; let i = index">
-                  {{branch.name}}
+                  {{branch.name}}  <button (click)="removeBranch(branch)">X</button>
                 </div>
             </div>
           </div>
