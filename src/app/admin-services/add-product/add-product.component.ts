@@ -17,7 +17,7 @@ export class AddProductComponent implements OnInit {
   branches=[];
   selectedBranch="";
   productsByBranch=[];
-  private branchSelect;
+  branchSelect;
   productRequest={
     productId:"",
     productName:"",
@@ -28,21 +28,39 @@ export class AddProductComponent implements OnInit {
   }
 
   productSelect=""
-
   branchList=[]
   updateBranchList=[]
   productList=[]
-
   dropdownBranchList=[]
   tagsBranchList=[]
-
 
   addProduct = true;
   updateProduct = false;
 
+  resetFields() {
+    this.branches=[];
+    this.selectedBranch="";
+    this.productsByBranch=[];
+    this.branchSelect = [];
+    this.productRequest={
+      productId:"",
+      productName:"",
+      productDescription:"",
+      tasks:[],
+      branchDetails:[],
+      isActivity: ""
+    }
+    this.productSelect=""
+    this.branchList=[]
+    this.updateBranchList=[]
+    this.productList=[]
+    this.dropdownBranchList=[]
+    this.tagsBranchList=[]
+    this.newAttribute = {};
+  }
+
   ngOnInit() {
     this.getBranchList();
-
   }
 
   getBranchList(){
@@ -51,29 +69,56 @@ export class AddProductComponent implements OnInit {
   	})
   }
 
-  addProducts(){
-  var that = this;
-  this.service.addProduct(this.productRequest).subscribe((resp:any) =>  {
-      that.addSuccessMessage = resp.status;
-      if(resp.status){
+  addProducts() {
+    var that = this;
+    if(!this.productRequest ||
+      !this.productRequest.productName ||
+      !this.productRequest.branchDetails ||
+      this.productRequest.branchDetails.length === 0) {
+        alert("Please fill in the details ");
+        return;
+    }
+    this.service.addProduct(this.productRequest).subscribe((resp:any) =>  {
+      if(resp.status) {
         that.responseMessage = "Product Updated Successfully";
       } else {
         that.responseMessage = "Please enter valid details to add product";
       }
       console.log(resp);
-    })
+      that.resetFields();
+      that.getBranchList();
+      that.updateSuccessMessage = false;
+      that.addSuccessMessage = resp.status;
+      that.productRequest.tasks = [];
+      that.productRequest.branchDetails = [];
+    });
   }
 
   editProducts(){
-  var that = this;
-  this.service.editProduct(this.productRequest).subscribe((resp:any) =>  {
-      that.updateSuccessMessage = resp.status;
+    var that = this;
+    if(!this.productRequest ||
+      !this.productRequest.productName ||
+      !this.productRequest.branchDetails ||
+      this.productRequest.branchDetails.length === 0) {
+        alert("Please fill in the details ");
+        return;
+    }
+    this.service.editProduct(this.productRequest).subscribe((resp:any) =>  {
       if(resp.status){
         that.responseMessage = "Product Updated Successfully";
       } else {
         that.responseMessage = "Please enter valid details to update product";
       }
       console.log(resp);
+      that.resetFields();
+      that.service.getProducts().subscribe((products:any) =>  {
+        that.productList = products;
+      });
+      that.getBranchList();
+      that.addSuccessMessage = false;
+      that.updateSuccessMessage = resp.status;
+      that.productRequest.tasks=[];
+      that.productRequest.branchDetails=[];
     })
   }
 
@@ -86,63 +131,74 @@ export class AddProductComponent implements OnInit {
 
 
   addFieldValue() {
-      this.productRequest.tasks.push(this.newAttribute);
-      this.newAttribute = {};
+    if(!this.newAttribute || !this.newAttribute.name) {
+      alert("Please fill in the Task Name and Description");
+      return;
+    }
+    this.productRequest.tasks.push(this.newAttribute);
+    this.newAttribute = {};
   }
 
   deleteFieldValue(index) {
       this.productRequest.tasks.splice(index, 1);
   }
 
-  submitProduct(isEdit){
+  submitProduct(isEdit) {
   console.log("isEdit",isEdit)
-    if(isEdit){
+    if(isEdit) {
+      if(!this.productSelect) {
+        alert("Please select the product");
+        return;
+      }
       this.productRequest.productId = this.productList[this.productSelect].id;
       console.log("Inside submit product",this.productRequest);
       this.editProducts();
     }
-    else
-    {
+    else {
       console.log("Inside submit product",this.productRequest);
       this.addProducts();
     }
   }
 
-  showAddProduct(){
-  console.log("In showAddProduct()");
+  resetBeforeShow() {
+    this.resetFields();
+    this.responseMessage="";
     this.productRequest.tasks=[];
     this.productRequest.branchDetails=[];
-    this.addProduct = true;
-    this.updateProduct = false;
+    this.getBranchList();
     this.addSuccessMessage=false;
     this.updateSuccessMessage= false;
   }
 
+  showAddProduct(){
+    console.log("In showAddProduct()");
+    this.resetBeforeShow();
+    this.addProduct = true;
+    this.updateProduct = false;
+  }
+
   showUpdateProduct(){
-  console.log("In showUpdateProduct()");
-    this.addProduct = false;
-    this.updateProduct = true;
-    this.productRequest.tasks=[];
+    console.log("In showUpdateProduct()");
+    this.resetBeforeShow();
     this.service.getProducts().subscribe((products:any) =>  {
       this.productList = products;
     });
-    this.addSuccessMessage=false;
-    this.updateSuccessMessage= false;
+    this.addProduct = false;
+    this.updateProduct = true;
   }
 
   getSelectedProductDetails(){
     this.service.getSelectedProductDetails(this.productList[this.productSelect].id).subscribe((productDetails:any) =>  {
-    //this.updateBranchList=productDetails.branches;
-    this.productRequest.branchDetails=productDetails.branches;
-    this.productRequest.tasks=productDetails.tasks;
-    // console.log(this.productList[this.productSelect].productName);
-    // console.log(this.productList[this.productSelect].productDescription);
-    // console.log(this.productList[this.productSelect].isActivity);
-    // this.productRequest.productName = this.productList[this.productSelect].productName;
-    // this.productRequest.productDescription = this.productList[this.productSelect].productDescription;
-    this.productRequest.isActivity = this.productList[this.productSelect].isActivity;
-      console.log("productDetails",productDetails.branches);
-    })
+      //this.updateBranchList=productDetails.branches;
+      this.productRequest.branchDetails = productDetails.branches;
+      this.productRequest.tasks = productDetails.tasks;
+      // console.log(this.productList[this.productSelect].productName);
+      // console.log(this.productList[this.productSelect].productDescription);
+      // console.log(this.productList[this.productSelect].isActivity);
+      this.productRequest.productName = this.productList[this.productSelect].name;
+      this.productRequest.productDescription = this.productList[this.productSelect].description;
+      this.productRequest.isActivity = this.productList[this.productSelect].isActivity;
+    });
   }
 
   getSelectedBranch(){
