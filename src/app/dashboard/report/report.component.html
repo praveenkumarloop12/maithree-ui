@@ -125,8 +125,9 @@
                     <tr *ngFor="let task of finalStructuredData.uiData">
                       <td>{{task.productName}}</td>
                       <td>{{task.taskName}}</td>
-                      <td style="text-align:center" *ngFor="let m of task.metrics">
+                      <td style="text-align:center" *ngFor="let m of task.metrics; let i =index">
                         {{m.groupedTarget}} ({{m.groupedCompleted}}) 
+                        <span *ngIf="i > 0" [ngClass]="{'fa fa-arrow-up green' : m.groupedCompleted > task.metrics[i-1].groupedCompleted, 'fas fa-arrow-down red' : m.groupedCompleted < task.metrics[i-1].groupedCompleted}"></span>
                       </td>
                     </tr>
                   </table>
