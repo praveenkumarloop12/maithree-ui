@@ -65,6 +65,31 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-md-1">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="defaultReportTypeGroup" id="defaultReportType1"[(ngModel)]="defaultReportType"  [value]="1" checked (change)="onSelectionChange(1)">
+                      <label class="form-check-label" for="defaultReportType1"  >
+                        Monthly
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="defaultReportTypeGroup" id="defaultReportType2"  [(ngModel)]="defaultReportType" [value]="2" (change)="onSelectionChange(2)">
+                      <label class="form-check-label" for="defaultReportType2" >
+                        Custom
+                      </label>
+                    </div>
+                   
+                  </div>
+              </div>
+                <div class="col-md-3">
+                  <div>
+                      <span (click)="previousYear()"><i class="fas fa-arrow-circle-left"></i></span> <span>{{currentYear}}</span> <span (click)="nextYear()"><i class="fas fa-arrow-circle-right"></i></span>
+                  </div>
+                  <div class="mt-2">
+                      <button type="button"   *ngFor="let month of monthNames;let i = index" (click)="selectedMonth(i)" [ngClass]="{'btn btn-outline-dark btn-sm ml-1 mt-1 active' : isActive(i), 'btn btn-outline-dark btn-sm ml-1 mt-1' : !isActive(i) }">{{month}}</button>
+                  </div>
+                </div>
               </div>
            
 

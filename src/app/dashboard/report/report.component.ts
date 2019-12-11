@@ -36,6 +36,11 @@ export class ReportComponent implements OnInit {
   private showstudentMsg = false;
   private errors;
   private studentDetails;
+  private currentYear = new Date().getFullYear();
+  private  monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+  private monthFilter = [];
+  private defaultReportType = 1;
 
   constructor(private reportService: ReportService, private service: AppService) { }
   groupBranch:any;
@@ -208,8 +213,54 @@ export class ReportComponent implements OnInit {
         }
 
         this.branchWiseDataSummary = summary;
-    })
+    });
 
   }
 
+  nextYear() {
+    this.currentYear = this.currentYear + 1;
+  }
+
+  previousYear() {
+    this.currentYear = this.currentYear - 1;
+  }
+
+  onSelectionChange(value: any) {
+    this.defaultReportType = Number(value);
+    this.monthFilter = []
+  }
+
+  selectedMonth(id: any) {
+    console.log('radio :', this.defaultReportType, 'month :', id, 'year :', 
+      this.currentYear, 'array:' , this.monthFilter, this.monthFilter.length);
+    
+    if(this.defaultReportType === 1 && this.monthFilter.length === 0) {
+      this.monthFilter.push(id);
+    }
+   
+
+    if(this.defaultReportType === 2 && this.monthFilter.length < 3) {
+      this.monthFilter.push(id);
+    }
+
+    if(this.defaultReportType === 2 && this.monthFilter.length > 3) {
+      this.removeMonthFromFilterList(id);
+    }
+
+    console.log(this.monthFilter)
+  }
+
+  removeMonthFromFilterList(id: any) {
+    for(var i = 0; i < this.monthFilter.length; i++) {
+      if(this.monthFilter[i] === id) {
+        this.monthFilter.splice(i, 1);
+      }
+    }
+  }
+
+  isActive(id: any) {
+
+    console.log(id)
+    return this.monthFilter.indexOf(id) > 0 ? true : false;
+  }
 }

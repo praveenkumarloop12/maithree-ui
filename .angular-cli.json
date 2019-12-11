@@ -19,7 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "./assets/css/sbadmin.css",
         "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
         "../node_modules/ng-toast/dist/ngToast.css",
         "styles.css",
