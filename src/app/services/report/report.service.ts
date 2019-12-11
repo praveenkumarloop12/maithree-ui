@@ -37,8 +37,12 @@ export class ReportService {
     });
   }
 
-  getStudentsReport(branchID, studentID){
-    return this.http.get(this.getBaseUrl()+"/branches/"+branchID+"/studentProgress?studentId="+studentID).map((res: any) => {
+  getStudentsReport(branchID, studentID, date, isCustom, selectedQuarter){
+    let url = this.getBaseUrl()+'/branches/'+branchID+'/studentProgress?studentId='+studentID+'&date='+date+'&type=monthly';
+    if(isCustom) {
+      url = this.getBaseUrl()+'/branches/'+branchID+'/studentProgress?studentId='+studentID+'&date='+date+'&type=quarterly&quarterIndex='+Number(Number(selectedQuarter)+1);
+    }
+    return this.http.get(url).map((res: any) => {
       let getStudentReport = res;
       return getStudentReport;
     });

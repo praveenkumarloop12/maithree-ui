@@ -30,7 +30,7 @@ export class ReportComponent implements OnInit {
   private studentsData;
   private studentSelect;
   private branchIDValue;
-  private studentID;
+  private studentID = 0;
   private viewTable;
   private showmessage = true;
   private showstudentMsg = false;
@@ -41,6 +41,11 @@ export class ReportComponent implements OnInit {
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
   private monthFilter = [];
   private defaultReportType = 1;
+  private hideMonths = false;
+  private monthsInquarter = [{'name':'Q1', 'text':'January to March'},{'name':'Q2', 'text':'April to June'},{'name':'Q3', 'text':'July to September'},{'name':'Q4', 'text':'October to December'}];
+  private selectedmonthsInquarter = 0;
+  private selectedMonthIndex = new Date().getMonth();
+  private selectedQuarterIndex = -1;
 
   constructor(private reportService: ReportService, private service: AppService) { }
   groupBranch:any;
@@ -67,21 +72,43 @@ export class ReportComponent implements OnInit {
     this.getSummaryTotal();
     this.getBranchList();
     this.showstudentMsg = false;
+    this.monthFilter.push(new Date().getMonth());
+    this.selectedQuarterIndex = this.currentQuarter();
   }
 
   getStudentsReport() {
     var branchID = this.branchIDValue;
     var studentID = this.studentID;
-  	this.reportService.getStudentsReport(branchID, studentID).subscribe(
+    var month = this.monthFilter[0] + 1;
+    if(month < 10) {
+      month = "0"+ month;
+    }
+    let isCustom = false
+    let date = this.currentYear + "-" + month + "-01";
+    //if custom is selected.
+    if(this.defaultReportType === 2) {
+      console.log(this.selectedmonthsInquarter, this.currentYear);
+       isCustom = true;
+    }
+
+    console.log(date); 
+  	this.reportService.getStudentsReport(branchID, studentID, date, isCustom, this.selectedQuarterIndex).subscribe(
       data => {
         console.log("check for data", data);
+          this.monthFilter = [];
           this.showmessage = false;
           this.showstudentMsg = false;
           this.studentReportData = data;
           if((branchID != null || branchID != undefined) && (studentID != null || studentID != undefined)){
-            this.changeDataStructure();
-            this.viewTable = true;
+            //this.changeDataStructure();
+            this.finalStructuredData = data;
+            if(!this.finalStructuredData || this.finalStructuredData.uiData.length == 0) {
+              this.showstudentMsg = true;
+              this.viewTable = false;
+            } else 
+              this.viewTable = true;
           }else{
+            this.finalStructuredData = [];
             this.viewTable = false;
           }
       },
@@ -113,26 +140,21 @@ export class ReportComponent implements OnInit {
   }
 
   getDetailsForSelectedStudent(){
-    var that = this;
-    var studentSelected = this.studentSelect;
-    var studentId = this.studentsData[studentSelected].studentId;
-    this.studentDetails = this.studentsData[studentSelected];
-    this.studentID = studentId;
-    this.getStudentsReport();
+   this.getStudentsReport();
   }
 
-    getSummaryTotal() {
-        this.reportService.getSummaryTotal().subscribe(data => {
-        this.overallData = data;
-        })
-    }
+  getSummaryTotal() {
+      this.reportService.getSummaryTotal().subscribe(data => {
+      this.overallData = data;
+      })
+  }
 
   getInventries() {
     this.reportService.getAllTaskReport().subscribe(data => {
         this.reportResult = data;
         console.log("this.reportResult",this.reportResult);
     })
-    }
+  }
 
   getBranches() {
       this.service.getBranches().subscribe((branches:any) =>  {
@@ -227,40 +249,53 @@ export class ReportComponent implements OnInit {
 
   onSelectionChange(value: any) {
     this.defaultReportType = Number(value);
-    this.monthFilter = []
+    this.monthFilter = [];
+    this.monthFilter.push(new Date().getMonth())
+    this.selectedmonthsInquarter = new Date().getMonth();
+    this.selectedQuarterIndex = this.currentQuarter();
+    this.viewTable = false;
+    if(Number(value) === 2) {
+      this.hideMonths = true;
+    }else {     
+       this.hideMonths = false;
+    }
   }
 
   selectedMonth(id: any) {
+
     console.log('radio :', this.defaultReportType, 'month :', id, 'year :', 
       this.currentYear, 'array:' , this.monthFilter, this.monthFilter.length);
-    
-    if(this.defaultReportType === 1 && this.monthFilter.length === 0) {
+
+      this.monthFilter = [];
       this.monthFilter.push(id);
-    }
+      this.selectedMonthIndex = id;
    
-
-    if(this.defaultReportType === 2 && this.monthFilter.length < 3) {
-      this.monthFilter.push(id);
-    }
-
-    if(this.defaultReportType === 2 && this.monthFilter.length > 3) {
-      this.removeMonthFromFilterList(id);
-    }
-
-    console.log(this.monthFilter)
+    console.log(this.monthFilter);
   }
 
-  removeMonthFromFilterList(id: any) {
-    for(var i = 0; i < this.monthFilter.length; i++) {
-      if(this.monthFilter[i] === id) {
-        this.monthFilter.splice(i, 1);
-      }
+  selectedQuarter(id: any) {
+    if(id +1  === this.selectedmonthsInquarter ) {
+      this.selectedQuarterIndex = -1;
+    }else {
+      this.selectedQuarterIndex = id;
+      this.selectedmonthsInquarter = id + 1;
     }
+    
+    
   }
 
   isActive(id: any) {
-
-    console.log(id)
     return this.monthFilter.indexOf(id) > 0 ? true : false;
+  }
+
+  currentQuarter(){
+    var d = new Date();
+    return  Math.ceil(d.getMonth() / 3) -1;
+  }
+
+  setSelectedStudent(student: any) {
+    var studentSelected = this.studentSelect;
+    this.studentID = this.studentsData[studentSelected].studentId;
+    this.studentDetails = this.studentsData[studentSelected];
   }
 }
