@@ -19,9 +19,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 /*Feature modules*/
 
-import {DashboardModule} from "./dashboard/dashboard.module"
-import {BranchSelectorModule} from "./dashboard/branch/branch.module"
-import {JobsModule} from "./dashboard/jobs/jobs.module";
+import {DashboardModule} from './dashboard/dashboard.module'
+import {BranchSelectorModule} from './dashboard/branch/branch.module'
+import {JobsModule} from './dashboard/jobs/jobs.module';
 import { ReportModule } from './dashboard/report/report.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AdminServicesModule } from './admin-services/admin-services.module';
@@ -30,12 +30,12 @@ import { UiModule } from './ui/ui.module';
 
  
 /**Services **/
-import { AppService } from "./services/app-services";
-import { UrlService } from "./services/url-config";
+import { AppService } from './services/app-services';
+import { UrlService } from './services/url-config';
 import { ReportService } from './services/report/report.service';
 import { AppComponent } from './app.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-import { NotificationService } from "./services/notification-services";
+import { NotificationService } from './services/notification-services';
 import  { AuthInterceptor } from './services/auth-interceptor';
 
 export class MyHammerConfig extends HammerGestureConfig  {
