@@ -95,7 +95,8 @@ export class ReportComponent implements OnInit {
   	this.reportService.getStudentsReport(branchID, studentID, date, isCustom, this.selectedQuarterIndex).subscribe(
       data => {
         console.log("check for data", data);
-          this.monthFilter = [];
+          //this.monthFilter = [];
+          
           this.showmessage = false;
           this.showstudentMsg = false;
           this.studentReportData = data;
