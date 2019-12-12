@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import { ToastrModule } from 'ngx-toastr';
+
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 
  
 @NgModule({
- imports:      [ CommonModule ],
+ imports:      [ CommonModule, BrowserAnimationsModule, ToastrModule.forRoot() ],
  declarations: [ ],
- exports:      [ CommonModule, FormsModule, ToastModule ]
+ exports:      [ CommonModule, FormsModule, ToastrModule ]
 })
 export class SharedModule { }

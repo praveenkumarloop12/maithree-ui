@@ -24,12 +24,12 @@
         "../node_modules/ng-toast/dist/ngToast.css",
         "styles.css",
         "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
-        "./assets/css/admin.css"
+        "./assets/css/admin.css",
+        "../node_modules/ngx-toastr/toastr.css"
         
       ],
       "scripts": [
         "../node_modules/angular-sanitize/angular-sanitize.js",
-        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.js",
         "../node_modules/ng2-toastr/bundles/ng2-toastr.min.js"
       ],
       "environmentSource": "environments/environment.ts",

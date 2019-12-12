@@ -75,7 +75,8 @@ export class AddProductComponent implements OnInit {
       !this.productRequest.productName ||
       !this.productRequest.branchDetails ||
       this.productRequest.branchDetails.length === 0) {
-        alert("Please fill in the details ");
+     
+        this.service.showError("Please fill in the details")
         return;
     }
     this.service.addProduct(this.productRequest).subscribe((resp:any) =>  {
@@ -100,7 +101,8 @@ export class AddProductComponent implements OnInit {
       !this.productRequest.productName ||
       !this.productRequest.branchDetails ||
       this.productRequest.branchDetails.length === 0) {
-        alert("Please fill in the details ");
+        
+        this.service.showError("Please fill in the details")
         return;
     }
     this.service.editProduct(this.productRequest).subscribe((resp:any) =>  {
@@ -132,7 +134,8 @@ export class AddProductComponent implements OnInit {
 
   addFieldValue() {
     if(!this.newAttribute || !this.newAttribute.name) {
-      alert("Please fill in the Task Name and Description");
+      
+      this.service.showError("Please fill in the Task Name and Description")
       return;
     }
     this.productRequest.tasks.push(this.newAttribute);
@@ -147,7 +150,7 @@ export class AddProductComponent implements OnInit {
   console.log("isEdit",isEdit)
     if(isEdit) {
       if(!this.productSelect) {
-        alert("Please select the product");
+        this.service.showError("Please select the product");
         return;
       }
       this.productRequest.productId = this.productList[this.productSelect].id;

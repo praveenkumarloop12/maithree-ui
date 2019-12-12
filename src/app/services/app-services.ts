@@ -10,6 +10,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
 import { UrlService } from './url-config';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Injectable()
@@ -19,7 +21,10 @@ export class AppService {
     currentBranch = this.selectedBranch.asObservable();
     private SELECTED_BRANCH:any;
 
-    constructor(private http: HttpClient, private router:Router, private localStorage: LocalStorage, private urlService : UrlService) { }
+    constructor(private http: HttpClient, private router:Router, private localStorage: LocalStorage, 
+        private urlService : UrlService,public toastr: ToastrService) {
+            
+         }
 
     getBaseUrl() {
         return this.urlService.getBaseUrl();
@@ -284,6 +289,14 @@ export class AppService {
         return result;
       });
    }
+
+   showSuccess(msg: string) {
+    this.toastr.success(msg, 'Success!');
+  }
+
+  showError(msg: string) {
+    this.toastr.error(msg, 'Oops!');
+  }
 
 
 }
