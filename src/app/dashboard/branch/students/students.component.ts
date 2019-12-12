@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AppService } from  '../../../services/app-services';
+import { AppService } from '../../../services/app-services';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -119,6 +119,7 @@ export class StudentsComponent implements OnInit {
       this.selectedProduct=null;
       this.getStudentList(this.branchId);
       this.showMessage = true;
+      this.service.showSuccess("Task updated successfully");
     }
     cancel(){
       this.selectedStudent=null;

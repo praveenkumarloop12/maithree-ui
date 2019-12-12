@@ -1,25 +1,62 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col-sm-3 alert alert-success alert-dismissible" *ngIf = "showMessage">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <h5>{{responseMessage}}</h5>
     </div>
-</div>
+</div> -->
 <div class="row">
-    <div class="col-sm-3">
+        <div class="col-sm-3">
+            <div class=" card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Students</h6>
+                    </div>
+                    <div class="card-body">
+                            <table class="table">
+                                <tr *ngFor="let field of studentsData; index as i" style="display:flex" [style.background]="field.studentId==selectedStudent ? 'selected-row' : null">
+                                    <td style="width:100%" (click)="getProducts(field)">
+                                        <label>{{field.firstName}} {{field.lastName}}</label>
+                                    </td>
+                                </tr>
+                            </table>
+                    </div>
+            </div>
+        </div>
+
+    <!-- <div class="col-sm-3">
             <table class="table  table-bordered">
                 <thead>
                     <tr>
                         <th>Students</th>
                     </tr>
                 </thead>
-                    <tr *ngFor="let field of studentsData; index as i" style="display:flex" [style.background]="field.studentId==selectedStudent ? 'bisque' : null">
+                    <tr *ngFor="let field of studentsData; index as i" style="display:flex" [style.background]="field.studentId==selectedStudent ? 'selected-row' : null">
                         <td style="width:100%" (click)="getProducts(field)">
                             <label>{{field.firstName}} {{field.lastName}}</label>
                         </td>
                     </tr>
             </table>
+    </div> -->
+
+    <div class="col-sm-3">
+        <div class=" card shadow mb-4 ml-1" *ngIf="selectedStudent != undefined">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Products</h6>
+                </div>
+                <div class="card-body">
+                        <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let field of productsData; index as i" style="display:flex"
+                                    [style.background]="field.productId==selectedProduct ? 'selected-row' : null">
+                                        <td style="width:100%" (click)="getTasks(field)">
+                                            <label>{{field.productName}}</label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                </div>
+        </div>
     </div>
-    <div class="col-sm-3" *ngIf="selectedStudent != undefined">
+    <!-- <div class="col-sm-3" *ngIf="selectedStudent != undefined">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -28,15 +65,53 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let field of productsData; index as i" style="display:flex"
-                    [style.background]="field.productId==selectedProduct ? 'bisque' : null">
+                    [style.background]="field.productId==selectedProduct ? 'selected-row' : null">
                         <td style="width:100%" (click)="getTasks(field)">
                             <label>{{field.productName}}</label>
                         </td>
                     </tr>
                 </tbody>
             </table>
+    </div> -->
+
+    <div class="col-sm-5">
+    <div class=" card shadow mb-4 ml-1" *ngIf="selectedProduct != undefined">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">Students</h6>
+            </div>
+            <div class="card-body">
+                    <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%;"></th>
+                                    <th  style="width:85%;">Task</th>
+                                    <th  style="width:5%;text-align: center;margin: 0px;padding: 0px;">Target <span style="font-size: 9px;text-align: center;">(approx.)</span></th>
+                                    <th  style="width:5%;text-align: center;">Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let field of tasksData;">
+                                    <td  style="width:5%;"><input class="checkbox-style" [(ngModel)]="field.assigned"  type="checkbox"/></td>
+                                    <td  style="width:85%;"><label>{{field.taskName}}</label></td>
+                                    <td  style="width:5%;text-align: center;"><input type="text" class="form-control" style="width:45px;text-align: center;" [(ngModel)]="field.target"/></td>
+                                    <td  style="width:5%;text-align: center;"><input type="text" class="form-control" style="width:45px;text-align: center;" [(ngModel)]="field.completed"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-sm-12" style="text-align: right">
+                                <button class="btn btn-primary" (click)="submitSave()">Save</button>
+                                <button class="btn btn-primary" (click)="cancel()">Cancel</button>
+                                <!-- <div class="row" *ngIf = "showMessage">
+                                    <div class="col-lg-12">
+                                        <h4 class="text-center" style="margin: auto 0; margin-top:60px;" [style.color]="responseStatus==true?'Green':'Red'">{{responseMessage}}</h4>
+                                    </div>
+                                </div> -->
+                            </div>
+                    </div>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-6" *ngIf="selectedProduct != undefined">
+    <!-- <div class="col-sm-6" *ngIf="selectedProduct != undefined">
             <table class="table  table-bordered">
                 <thead>
                     <tr>
@@ -58,11 +133,7 @@
             <div class="col-sm-12" style="text-align: right">
                 <button class="btn btn-primary" (click)="submitSave()">Save</button>
                 <button class="btn btn-primary" (click)="cancel()">Cancel</button>
-                <!-- <div class="row" *ngIf = "showMessage">
-                    <div class="col-lg-12">
-                        <h4 class="text-center" style="margin: auto 0; margin-top:60px;" [style.color]="responseStatus==true?'Green':'Red'">{{responseMessage}}</h4>
-                    </div>
-                </div> -->
+            
             </div>
-    </div>
-</div>
+    </div> -->
+
