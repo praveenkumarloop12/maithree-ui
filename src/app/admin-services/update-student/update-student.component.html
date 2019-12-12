@@ -3,11 +3,11 @@
       <div class="col-lg-12">
         <h4 style="margin: auto 0">Update Student
           <span style="float: right">
-            <a style="border-radius: 40px;color: #ffff;background: #343a40;" class="tablinks btn btn-default" href="#/admin-dashboard/add-student">Add Student</a>
-            <a style="border-radius: 40px;color: #ffff;background: #343a40;" class="tablinks btn btn-default" href="#/admin-dashboard/update-student">Update Student</a>
+            <a style="border-radius: 40px;color: #ffff;background: #343a40;" class="tablinks btn btn-default" routerLink="/admin-dashboard/add-student">Add Student</a>
+            <a style="border-radius: 40px;color: #ffff;background: #343a40;" class="tablinks btn btn-default" routerLink="/admin-dashboard/update-student">Update Student</a>
           </span>
         </h4>
-      </div>  
+      </div>
   </div>
   <hr>
   <br/>
@@ -44,7 +44,7 @@
               </div>
               <div class="form-group">
                 <label class="control-label col-sm-4" for="middleName">Middle Name:</label>
-                <div class="col-sm-12">          
+                <div class="col-sm-12">
                   <input [(ngModel)]="studentRequest.middleName" type="text" class="form-control" id="middleName" placeholder="Enter middle name" name="middleName">
                 </div>
               </div>
@@ -72,13 +72,13 @@
               </div>
               <div class="form-group">
                 <label class="control-label col-sm-4" for="phoneNumber">Phone Number:</label>
-                <div class="col-sm-12">          
+                <div class="col-sm-12">
                   <input [(ngModel)]="studentRequest.phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Enter phone number" name="phoneNumber">
                 </div>
               </div>
               <div class="form-group">
                   <label class="control-label col-sm-4" for="emailAddress">Email Address:</label>
-                  <div class="col-sm-12">          
+                  <div class="col-sm-12">
                     <input [(ngModel)]="studentRequest.emailAddress" type="email" class="form-control" id="emailAddress" placeholder="Enter email id" name="emailAddress">
                   </div>
                 </div>
@@ -90,7 +90,7 @@
                           </label>
                           <label class="radio-inline" style="margin-left: 15px">
                             <input type="radio" name="gender" value="F" style="margin-right: 10px;" (click)="getSelectedGender($event)">Female
-                          </label>        
+                          </label>
                     </div>
                   </div>
             </form>
@@ -132,9 +132,9 @@
       </div>
       <!-- <div class="row" style="background: #f1f1f1;border-radius: 15px;margin-top: 10px;padding: 20px 20px;">
           <div class="col-sm-12">
-              Assign task to student 
+              Assign task to student
               <hr>
-          </div>  
+          </div>
 
           <div class="col-sm-2">
               <label class="control-labeL">Product:</label>
@@ -174,10 +174,10 @@
         </tbody>
       </table>
     </div> -->
-      
-    
-      <button type="button" 
-        class="btn btn-info" 
+
+
+      <button type="button"
+        class="btn btn-info"
         (click)="submitStudent()"
         style="background-color: #16A085; float:right; margin-right:20px; margin-top:40px;">
         Submit
@@ -185,8 +185,6 @@
       <div class="row" *ngIf = "displayMessage">
       <div class="col-lg-12">
         <h4 class="text-center" style="margin: auto 0; margin-top:60px;" [style.color]="addSuccessMessage==true?'Green':'Red'">{{responseMessage}}</h4>
-      </div> 
+      </div>
     </div>
 </div>
-
-
