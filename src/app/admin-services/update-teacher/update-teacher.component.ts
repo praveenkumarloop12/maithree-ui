@@ -33,7 +33,7 @@ export class UpdateTeacherComponent implements OnInit {
   onSubmit() {
     this.service.editMember(this.model).subscribe(
       (data: any) => {
-      this.service.showSuccess("Task updated successfully");
+      this.service.showSuccess("Record updated successfully");
       this.formReset(this.heroForm);
     },error => {
       this.formReset(this.heroForm);

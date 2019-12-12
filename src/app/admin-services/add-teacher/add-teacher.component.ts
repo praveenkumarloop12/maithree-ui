@@ -23,9 +23,10 @@ export class AddTeacherComponent implements OnInit {
     this.service.addMember(this.model).subscribe(
       (data: any) => {
       this.formReset(heroForm);
-      
+      this.service.showSuccess("Record created successfully");
     },error => {
       this.formReset(heroForm);
+      this.service.showError("Something went wrong, Please try again.");
     });
   }
 
