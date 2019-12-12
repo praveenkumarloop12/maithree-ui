@@ -1,9 +1,9 @@
 <div id="page-top">
 <nav class="navbar navbar-expand navbar-light bg-white topbar  static-top shadow">
 
-      <a class="navbar-brand mr-1" href="admin-dashboard/home">Maithree</a>
+      <a class="navbar-brand mr-1" routerLink="/admin-dashboard/home">Maithree</a>
 
-      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" >
         <i class="fas fa-bars"></i>
       </button>
 
@@ -35,25 +35,25 @@
       <!-- Sidebar -->
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
         <li class="nav-item active">
-          <a class="nav-link" href="admin-dashboard/home">
+          <a class="nav-link" routerLink="/admin-dashboard/home">
             <i class="fas fa-fw fa-tachometer-alt"  style="width: 25px"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="admin-dashboard/add-product">
+          <a class="nav-link" routerLink="/admin-dashboard/add-product">
             <i class="fab fa-product-hunt" style="width: 25px;"></i>
             <span>Manage Product</span>
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="admin-dashboard/add-student">
+          <a class="nav-link" routerLink="/admin-dashboard/add-student">
             <i class="fas fa-user" style="width: 25px;"></i>
             <span>Manage Student</span>
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="admin-dashboard/add-teacher">
+          <a class="nav-link" routerLink="/admin-dashboard/add-teacher">
             <i class="fas fa-user" style="width: 25px;"></i>
             <span>Manage Teacher</span>
           </a>
@@ -101,7 +101,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" (click)="logout()">Logout</a>
           </div>
         </div>
       </div>
