@@ -3,7 +3,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a href="/dashboard/branch" class="d-none d-md-block d-lg-block">
+    <a routerLink="/dashboard/branch" class="d-none d-md-block d-lg-block">
       <img src="assets/img/logo.png" alt="Home" style="max-width: 60px;max-height: 60px"/>
     </a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -17,19 +17,19 @@
           </li>
 
           <li class="nav-item ml-2 pr-4" *ngIf="selectedBranch">
-              <a class="nav-link" href="/dashboard/branch">
+              <a class="nav-link" routerLink="/dashboard/branch">
                 <small class="form-text text-muted">Branch : {{selectedBranch || ""}}
                 </small>
               </a>
           </li>
           <li class="nav-item ml-2 pr-4">
-            <a class="nav-link" href="/dashboard/report" style="cursor: pointer">
+            <a class="nav-link" routerLink="/dashboard/report" style="cursor: pointer">
              <small class="form-text text-muted"> Reports </small>
             </a>
           </li>
-        
+
            <li class="nav-item ml-2 pr-4">
-              <a class="nav-link" href="#/dashboard/branch">
+              <a class="nav-link" routerLink="/dashboard/branch">
                 <small class="form-text text-muted" (click)="logout()">Logout
                 </small>
               </a>
