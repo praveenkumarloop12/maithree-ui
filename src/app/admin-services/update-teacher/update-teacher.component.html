@@ -1,9 +1,9 @@
-<div class="container" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
+<div class="container card" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
   <div class="row">
     <div class="col-lg-12">
       <h4 style="margin: auto 0">Update Teacher
         <span style="float: right">
-          <a style="border-radius: 40px;color: #ffff;background: #343a40;" class="tablinks btn btn-default"
+          <a style="border-radius: 40px;" class="tablinks btn btn-outline-primary"
             href="/admin-dashboard/add-teacher">Add Teacher</a>
         </span>
       </h4>
@@ -96,26 +96,26 @@
     </div>
     <div class="row">
       <div class="col-sm-2">
-        <label class="control-label col-sm-4" for="isActive">Active:</label>
+        <label class="control-label col-sm-12" for="isActive">Active:</label>
         <div class="col-sm-12">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-secondary active" (click)="model.isActive='Y'">
+            <label class="btn btn-outline-primary" [ngClass]="{active: (model.isActive=='Y')}" (click)="model.isActive='Y'">
               <input type="radio" [(ngModel)]="model.isActive" [value]="Y" name="isActive"> Yes
             </label>
-            <label class="btn btn-secondary" (click)="model.isActive='N'">
+            <label class="btn btn-outline-primary" [ngClass]="{active: (model.isActive=='N')}" (click)="model.isActive='N'">
               <input type="radio" [(ngModel)]="model.isActive" name="isActive" [value]="N"> No
             </label>
           </div>
         </div>
       </div>
-      <div class="col-sm-2">
-        <label class="control-label col-sm-4" for="isAdmin">Admin:</label>
+      <div class="col-sm-3">
+        <label class="control-label col-sm-12" for="isAdmin">Admin:</label>
         <div class="col-sm-12">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-secondary" (click)="model.isAdmin='Y'">
+            <label class="btn btn-outline-primary" [ngClass]="{active: (model.isAdmin=='Y')}" (click)="model.isAdmin='Y'">
               <input type="radio" [(ngModel)]="model.isAdmin" [value]="Y" name="isAdmin"> Yes
             </label>
-            <label class="btn btn-secondary active" (click)="model.isAdmin='N'">
+            <label class="btn btn-outline-primary" [ngClass]="{active: (model.isAdmin=='N')}" (click)="model.isAdmin='N'">
               <input type="radio" [(ngModel)]="model.isAdmin" name="isAdmin" [value]="N"> No
             </label>
           </div>
@@ -134,11 +134,4 @@
       </div>
     </div>
   </form>
-  <div class="row" *ngIf="displayMessage">
-    <div class="col-lg-9 alert alert-success alert-dismissible">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      <h5 class="text-center" style="margin: auto 0; margin-top:60px;"
-        [style.color]="addSuccessMessage==true?'Green':'Red'">{{responseMessage}}</h5>
-    </div>
-  </div>
 </div>

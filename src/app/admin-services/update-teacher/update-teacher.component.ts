@@ -20,33 +20,24 @@ export class UpdateTeacherComponent implements OnInit {
     this.newTeacher();
     this.getMembers();
     this.getBranchList();
-    this.resetDisplayMessages();
   }
   initials = ['Mr.', 'Mrs.', 'Ms.', 'Miss.'];
 
   model: Teacher;
   
-  displayMessage: boolean;
-  addSuccessMessage: boolean;
-  responseMessage: string;
   branchList = [];
   teachersList = [];
   memberSelected: number;
   branchSelected: number;
 
   onSubmit() {
-    this.displayMessage = true;
     this.service.editMember(this.model).subscribe(
       (data: any) => {
-      this.addSuccessMessage = true;
-      this.responseMessage = "Teacher updated Successfully";
+      this.service.showSuccess("Task updated successfully");
       this.formReset(this.heroForm);
-      this.fadeDisplayMessages();
     },error => {
-      this.addSuccessMessage = error.ok;
       this.formReset(this.heroForm);
-      this.responseMessage = "Something went wrong, Please try again.";
-      this.fadeDisplayMessages();
+      this.service.showError("Something went wrong, Please try again.");
     });
   }
 
@@ -79,12 +70,6 @@ export class UpdateTeacherComponent implements OnInit {
     }
   };
 
-  resetDisplayMessages() {
-    this.displayMessage = false;
-    this.addSuccessMessage = false;
-    this.responseMessage = "";
-  }
-
   getMemberById(_id: number): any{
     let obj = null;
     if (this.teachersList == null || this.teachersList == undefined) {
@@ -101,12 +86,7 @@ export class UpdateTeacherComponent implements OnInit {
   formReset(form: any) {
     this.newTeacher();
     this.resetMember();
-    form.resetForm({ branchId: this.model.branchId, memberSelected: this.memberSelected, initial: this.model.initial });
-  }
-
-  fadeDisplayMessages() {
-    setTimeout(()=>{
-      this.resetDisplayMessages();
-    }, 3000);
+    form.resetForm({ branchId: this.model.branchId, memberSelected: this.memberSelected,
+       initial: this.model.initial, isAdmin: 'N', isActive: 'Y'  });
   }
 }
