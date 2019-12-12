@@ -11,6 +11,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 
 import { UrlService } from './url-config';
 import { ToastrService } from 'ngx-toastr';
+import { Teacher } from '../admin-services/add-teacher/teacher';
 
 
 
@@ -100,6 +101,21 @@ export class AppService {
           });
     }
 
+    addMember(member: Teacher) {
+        return this.http.post(this.getBaseUrl() + "/admin/addMember", member);
+    };
+
+    editMember(member: Teacher) {
+        return this.http.post(this.getBaseUrl() + "/admin/editMember", member);
+    };
+    
+    getAllMembersList() {
+        return this.http.get(this.getBaseUrl()+ "/admin/getAllMembers").map((response: Response) => {
+               let teachersList = response;
+               return teachersList;
+       });
+   }
+   
     editStudent(student:any){
         console.log(student);
         return this.http.post(this.getBaseUrl() + "/admin/editStudent",student)
