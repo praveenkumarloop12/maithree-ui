@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../services/report/report.service';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
-import { Angular5Csv } from 'angular5-csv/Angular5-csv';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import * as moment from 'moment';
 import { AppService } from '../../services/app-services';
 
