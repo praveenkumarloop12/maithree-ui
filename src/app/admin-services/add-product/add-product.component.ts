@@ -219,4 +219,15 @@ export class AddProductComponent implements OnInit {
       });
     }
   }
+  
+  removeBranch(branch){
+    for (let branchDetails of this.productRequest.branchDetails) {
+      if (branchDetails.id === branch.id) {
+        this.productRequest.branchDetails.splice(this.productRequest.branchDetails.indexOf(branchDetails), 1);
+          break;
+      }
+  }
+  }
+  
+  
 }
