@@ -1,28 +1,35 @@
-<body>
+<body class="bg-gradient-primary">
   <div class="container">
-    <div class="card card-login mx-auto mt-5 col-md-6 col-sm-6" style="background: #532863;color: #fff;">
+    <div class="card card-login mx-auto mt-5 col-md-6 col-sm-6">
       <div class="text-center">
-          <img style="height: 150px;width: 150px;" src="../assets/img/Maithree-Logo.png">
+          <img style="height: 150px;width: 150px;" src="assets/img/Maithree-Logo.png">
+          <div class="row" style="padding: 10px;">
+            <div class="col-sm-12" style="text-align: center;">
+              <span style="font-style: italic; font-family: serif;">“OF THE PARENTS, BY THE PARENTS AND</span>
+              <span style="font-style: italic; font-family: serif;">FOR THE PARENTS“</span>
+            </div>
+          </div>
       </div>
-      <!-- <div class="card-header">Maithree</div> -->
       <div class="card-body">
-        <div style="text-align:center;">“OF THE PARENTS, BY THE PARENTS AND <br> FOR THE PARENTS“</div> 
         <form name="form" novalidate="novalidate" class="form"
           [formGroup]="loginFrom" (ngSubmit)="authenticateUser()">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input class="form-control" name="username" id="InputEmail" [(ngModel)]= "user.username" type="text" aria-describedby="emailHelp" placeholder="Enter email" formControlName="username" name="username">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" for="exampleInputEmail1">Email</span>
+            </div>
+            <input class="form-control" name="username" id="InputEmail" [(ngModel)]= "user.username" type="text" aria-describedby="emailHelp" placeholder="xxx@xxxxx.com" formControlName="username" name="username">
           </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" for="exampleInputPassword1">Password</span>
+            </div>
             <input class="form-control" name="password" id="InputPassword" [(ngModel)]= "user.password" type="password" placeholder="Password" formControlName="password" name="password">
           </div>
-
           <button type="submit" [disabled]="!loginFrom.valid" class="btn btn-primary btn-block" href="javascript:void(0)" >Login</button>
         </form>
         <div class="text-center">
-          <a class="d-block small mt-3 disabled" href="#/register" alt="coming soon">Register an Account</a>
-          <a class="d-block small disabled" href="#/forgot-password" alt="coming soon">Forgot Password?</a>
+          <a class="d-block small mt-3 disabled" routerLink="/register" alt="coming soon">Register an Account</a>
+          <a class="d-block small disabled" routerLink="/forgot-password" alt="coming soon">Forgot Password?</a>
         </div>
       </div>
     </div>

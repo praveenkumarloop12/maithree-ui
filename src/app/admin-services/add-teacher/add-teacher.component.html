@@ -1,0 +1,127 @@
+<div class="container card" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
+  <div class="row">
+    <div class="col-lg-12">
+      <h4 style="margin: auto 0">Add Teacher
+        <span style="float: right">
+          <a style="border-radius: 40px;" class="tablinks btn btn-outline-primary"
+            routerLink="/admin-dashboard/update-teacher">Update Teacher</a>
+        </span>
+      </h4>
+    </div>
+  </div>
+  <hr>
+  <br />
+  <form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm" class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="branchId">Select Branch:</label>
+          <div class="col-sm-12">
+            <select required [(ngModel)]="model.branchId" class="form-control" name="branch">
+              <option style="text-align: center" disabled selected value="0">Select Branch</option>
+              <option *ngFor="let branch of branchList; let i = index" [value]="branch.id" style="text-align: center">
+                {{branch.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="initial">Initial:</label>
+          <div class="col-sm-12">
+            <select [disabled]="model.branchId==0" class="form-control" id="initial" required
+              [(ngModel)]="model.initial" name="initial" #initial="ngModel">
+              <option *ngFor="let pow of initials" [value]="pow">{{pow}}</option>
+            </select>
+            <div [hidden]="initial.valid || initial.pristine" class="alert alert-danger">
+              Initial is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="name">Name:</label>
+          <div class="col-sm-12">
+            <input type="text" [disabled]="model.branchId==0" placeholder="Enter name" class="form-control" id="name"
+              required [(ngModel)]="model.name" name="name" #name="ngModel">
+            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+              Name is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="contact">Contact:</label>
+          <div class="col-sm-12">
+            <input [disabled]="model.branchId==0" placeholder="XXX XXXX XXX" type="tel" pattern="[0-9]{10}"
+              class="form-control" id="contact" required [(ngModel)]="model.contact" name="contact" #contact="ngModel">
+            <div [hidden]="contact.pristine || contact.valid" class="alert alert-danger">
+              Enter a valid contact number
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="control-label col-sm-6" for="code">User Name</label>
+          <div class="col-sm-12">
+            <input [disabled]="model.branchId==0" type="text" placeholder="Enter user name" class="form-control"
+              id="code" required [(ngModel)]="model.code" name="code" #code="ngModel">
+            <div [hidden]="code.valid || code.pristine" class="alert alert-danger">
+              User Name is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="control-label col-sm-12" for="isActive">Active:</label>
+        <div class="col-sm-12">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-outline-primary" [ngClass]="{active: (model.isActive=='Y')}"
+              (click)="model.isActive='Y'">
+              <input type="radio" [(ngModel)]="model.isActive" [value]="Y" name="isActive"> Yes
+            </label>
+            <label class="btn btn-outline-primary" [ngClass]="{active: (model.isActive=='N')}"
+              (click)="model.isActive='N'">
+              <input type="radio" [(ngModel)]="model.isActive" name="isActive" [value]="N"> No
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <label class="control-label col-sm-12" for="isAdmin">Admin:</label>
+        <div class="col-sm-12">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-outline-primary" [ngClass]="{active: (model.isAdmin=='Y')}"
+              (click)="model.isAdmin='Y'">
+              <input type="radio" [(ngModel)]="model.isAdmin" [value]="Y" name="isAdmin"> Yes
+            </label>
+            <label class="btn btn-outline-primary" [ngClass]="{active: (model.isAdmin=='N')}"
+              (click)="model.isAdmin='N'">
+              <input type="radio" [(ngModel)]="model.isAdmin" name="isAdmin" [value]="N"> No
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12" style="text-align: right;">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary"
+              [disabled]="!heroForm.form.valid || model.branchId==0">Submit</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="formReset(heroForm);">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

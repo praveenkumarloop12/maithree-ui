@@ -17,7 +17,7 @@ export class AddProductComponent implements OnInit {
   branches=[];
   selectedBranch="";
   productsByBranch=[];
-  branchSelect;
+  branchSelect = 0;
   productRequest={
     productId:"",
     productName:"",
@@ -41,7 +41,7 @@ export class AddProductComponent implements OnInit {
     this.branches=[];
     this.selectedBranch="";
     this.productsByBranch=[];
-    this.branchSelect = [];
+    this.branchSelect = 0;
     this.productRequest={
       productId:"",
       productName:"",

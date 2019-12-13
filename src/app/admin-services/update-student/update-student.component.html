@@ -1,192 +1,162 @@
-<div class="container" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
+<div class="container card" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
   <div class="row">
-      <div class="col-lg-12">
-        <h4 style="margin: auto 0">Update Student
-          <span style="float: right">
-            <a style="border-radius: 40px;color: #ffff;background: #343a40;" class="tablinks btn btn-default" href="#/admin-dashboard/add-student">Add Student</a>
-            <a style="border-radius: 40px;color: #ffff;background: #343a40;" class="tablinks btn btn-default" href="#/admin-dashboard/update-student">Update Student</a>
-          </span>
-        </h4>
-      </div>  
+    <div class="col-lg-12">
+      <h4 style="margin: auto 0">Update Student
+        <span style="float: right">
+          <a style="border-radius: 40px;" class="tablinks btn btn-outline-primary"
+            href="/admin-dashboard/add-student">Add Student</a>
+        </span>
+      </h4>
+    </div>
   </div>
   <hr>
-  <br/>
+  <br />
   <div class="row">
-      <div class="col-sm-6">
-          <form class="form-horizontal">
-            <div class="form-group">
-              <label class="control-label col-sm-2">Select Branch:</label>
-              <select [(ngModel)]="branchSelect" name="branchSelect" (change)="getDetailsForSelectedBranch()">
-                <option *ngFor="let branch of branchList; let i = index" [value]="i" style="text-align: center"> {{branch.name}}</option>
-              </select>
-            </div>
-          </form>
-      </div>
-      <div class="col-sm-6">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label class="control-label col-sm-2">Select Student:</label>
-            <select [(ngModel)]="studentSelect" name="studentSelect" (change)="getDetailsForSelectedStudent()">
-              <option *ngFor="let student of studentsData; let i = index" [value]="i" style="text-align: center"> {{student.firstName}} {{student.lastName}}</option>
+    <div class="col-sm-6">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-2">Branch:</label>
+          <div class="col-sm-12">
+            <select [(ngModel)]="branchSelect" name="branchSelect" (change)="getDetailsForSelectedBranch()"
+              class="form-control">
+              <option *ngFor="let branch of branchList; let i = index" [value]="i" style="text-align: center">
+                {{branch.name}}</option>
             </select>
           </div>
-        </form>
-    </div>
-    </div>
-  <div class="row" style="margin-top: 10px;">
-      <div class="col-sm-6">
-          <form class="form-horizontal">
-              <div class="form-group">
-                <label class="control-label col-sm-4" for="firstName">First Name:</label>
-                <div class="col-sm-12">
-                  <input [(ngModel)]="studentRequest.firstName" type="text" class="form-control" id="firstName" placeholder="Enter first name" name="firstName">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-4" for="middleName">Middle Name:</label>
-                <div class="col-sm-12">          
-                  <input [(ngModel)]="studentRequest.middleName" type="text" class="form-control" id="middleName" placeholder="Enter middle name" name="middleName">
-                </div>
-              </div>
-              <div class="form-group">
-                  <label class="control-label col-sm-4" for="lastName">Last Name:</label>
-                  <div class="col-sm-12">
-                    <input [(ngModel)]="studentRequest.lastName" type="text" class="form-control" id="lastName" placeholder="Enter last name" name="lastName">
-                  </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4" for="dob">Date of Birth:</label>
-                    <div class="col-sm-12">
-                      <input [(ngModel)]="studentRequest.dob" type="date" class="form-control" id="dob" placeholder="Enter date of brith" name="dob">
-                    </div>
-                  </div>
-            </form>
-      </div>
-      <div class="col-sm-6">
-          <form class="form-horizontal">
-              <div class="form-group">
-                <label class="control-label col-sm-4" for="guardainName">Guardian Name:</label>
-                <div class="col-sm-12">
-                  <input [(ngModel)]="studentRequest.guardainName" type="guardainName" class="form-control" id="guardianname" placeholder="Enter guardian name" name="guardainName">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-4" for="phoneNumber">Phone Number:</label>
-                <div class="col-sm-12">          
-                  <input [(ngModel)]="studentRequest.phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Enter phone number" name="phoneNumber">
-                </div>
-              </div>
-              <div class="form-group">
-                  <label class="control-label col-sm-4" for="emailAddress">Email Address:</label>
-                  <div class="col-sm-12">          
-                    <input [(ngModel)]="studentRequest.emailAddress" type="email" class="form-control" id="emailAddress" placeholder="Enter email id" name="emailAddress">
-                  </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4" for="pwd">Gender:</label>
-                    <div class="col-sm-12">
-                          <label class="radio-inline">
-                            <input type="radio" name="gender" value="M" style="margin-right: 10px;" (click)="getSelectedGender($event)" checked>Male
-                          </label>
-                          <label class="radio-inline" style="margin-left: 15px">
-                            <input type="radio" name="gender" value="F" style="margin-right: 10px;" (click)="getSelectedGender($event)">Female
-                          </label>        
-                    </div>
-                  </div>
-            </form>
-      </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <form class="form-horizontal">
-                <div class="form-group">
-                  <label class="control-label col-sm-4" for="address">Address:</label>
-                  <div class="col-sm-12">
-                    <input [(ngModel)]="studentRequest.address" type="text" class="form-control" id="address" placeholder="Enter address" name="address">
-                  </div>
-                </div>
-              </form>
         </div>
-        <div class="col-sm-6">
-            <form class="form-horizontal">
-                <div class="form-group">
-                  <label class="control-label col-sm-4" for="state">State:</label>
-                  <div class="col-sm-12">
-                      <select [(ngModel)]="stateSelect" name="stateSelect" (change)="getSelectedState()" style="width: 100%;height: 38px;">
-                        <option *ngFor="let state of states; let i = index" [value]="state.key"> {{state.name}}</option>
-                      </select>
-                  </div>
-                </div>
-              </form>
-        </div>
-        <div class="col-sm-6">
-            <form class="form-horizontal">
-                <div class="form-group">
-                  <label class="control-label col-sm-4" for="pincode">Pincode:</label>
-                  <div class="col-sm-12">
-                    <input [(ngModel)]="studentRequest.pincode" type="text" class="form-control" id="pincode" placeholder="Enter pincode" name="pincode">
-                  </div>
-                </div>
-              </form>
-        </div>
-      </div>
-      <!-- <div class="row" style="background: #f1f1f1;border-radius: 15px;margin-top: 10px;padding: 20px 20px;">
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-2">Student:</label>
           <div class="col-sm-12">
-              Assign task to student 
-              <hr>
-          </div>  
-
-          <div class="col-sm-2">
-              <label class="control-labeL">Product:</label>
-              <select [(ngModel)]="taskmapping.productSelected" name="productSelected" (change)="getTasksForSelectedProduct(taskmapping.productSelected)">
-                  <option *ngFor="let product of productList; let i = index" [value]="product.id" style="text-align: center"> {{product.name}}</option>
-                </select>
+            <select class="form-control" [(ngModel)]="studentSelect" name="studentSelect"
+              (change)="getDetailsForSelectedStudent()">
+              <option *ngFor="let student of studentsData; let i = index" [value]="i" style="text-align: center">
+                {{student.firstName}} {{student.lastName}}</option>
+            </select>
           </div>
-          <div class="col-sm-9">
-              <label class="control-label">Task:</label>
-              <select [(ngModel)]="taskmapping.taskSelected" name="taskSelected" (change)="getSelectedTask()" style="width: 100%;">
-                  <option *ngFor="let task of taskList; let i = index" [value]="task.id" style="text-align: center"> {{task.name}}</option>
-                </select>
-          </div>
-          <div class="col-sm-1">
-              <button class="btn btn-primary" type="button" style="height: 25px;line-height: 0px;margin-bottom: -55px;" (click)="addTaskToStudent()">Add</button>
-          </div>
-          <table class="table table-striped table-bordered" style="margin-top: 5px;">
-        <thead>
-          <tr>
-                      <th style="width:20%;">Product Name</th>
-                      <th style="width:75%;">Task Details</th>
-                      <th style="width:5%;"></th>
-                  </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let field of studentRequest.tasks; let i = index">
-            <td>
-              <input [(ngModel)]="field.productName" class="form-control" type="text" name="{{field.productName}}" />
-            </td>
-            <td>
-              <input [(ngModel)]="field.taskName" class="form-control" type="text" name="{{field.taskName}}" />
-            </td>
-            <td width="150px">
-              <button class="glyphicon glyphicon-remove btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div> -->
-      
-    
-      <button type="button" 
-        class="btn btn-info" 
-        (click)="submitStudent()"
-        style="background-color: #16A085; float:right; margin-right:20px; margin-top:40px;">
-        Submit
-      </button>
-      <div class="row" *ngIf = "displayMessage">
-      <div class="col-lg-12">
-        <h4 class="text-center" style="margin: auto 0; margin-top:60px;" [style.color]="addSuccessMessage==true?'Green':'Red'">{{responseMessage}}</h4>
-      </div> 
+        </div>
+      </form>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="firstName">First Name:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.firstName" type="text" class="form-control" id="firstName"
+              placeholder="Enter first name" name="firstName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="middleName">Middle Name:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.middleName" type="text" class="form-control" id="middleName"
+              placeholder="Enter middle name" name="middleName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="lastName">Last Name:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.lastName" type="text" class="form-control" id="lastName"
+              placeholder="Enter last name" name="lastName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="dob">Date of Birth:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.dob" type="date" class="form-control" id="dob"
+              placeholder="Enter date of brith" name="dob">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="guardainName">Guardian Name:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.guardainName" type="guardainName" class="form-control" id="guardianname"
+              placeholder="Enter guardian name" name="guardainName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="phoneNumber">Phone Number:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.phoneNumber" type="text" class="form-control" id="phoneNumber"
+              placeholder="Enter phone number" name="phoneNumber">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="emailAddress">Email Address:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.emailAddress" type="email" class="form-control" id="emailAddress"
+              placeholder="Enter email id" name="emailAddress">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="pwd">Gender:</label>
+          <div class="col-sm-12">
+            <label class="radio-inline">
+              <input type="radio" name="gender" value="M" style="margin-right: 10px;"
+                (click)="getSelectedGender($event)" checked>Male
+            </label>
+            <label class="radio-inline" style="margin-left: 15px">
+              <input type="radio" name="gender" value="F" style="margin-right: 10px;"
+                (click)="getSelectedGender($event)">Female
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="address">Address:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.address" type="text" class="form-control" id="address"
+              placeholder="Enter address" name="address">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="state">State:</label>
+          <div class="col-sm-12">
+            <select [(ngModel)]="stateSelect" name="stateSelect" (change)="getSelectedState()" class="form-control">
+              <option *ngFor="let state of states; let i = index" [value]="state.key"> {{state.name}}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="pincode">Pincode:</label>
+          <div class="col-sm-12">
+            <input [(ngModel)]="studentRequest.pincode" type="text" class="form-control" id="pincode"
+              placeholder="XXX XXX" name="pincode" pattern="[0-9]{6}">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <button type="button" class="btn btn-info" (click)="submitStudent()"
+    style="background-color: #16A085; float:right; margin-right:20px; margin-top:40px;">
+    Submit
+  </button>
+  <div class="row" *ngIf="displayMessage">
+    <div class="col-lg-12">
+      <h4 class="text-center" style="margin: auto 0; margin-top:60px;"
+        [style.color]="addSuccessMessage==true?'Green':'Red'">{{responseMessage}}</h4>
+    </div>
+  </div>
 </div>
-
-

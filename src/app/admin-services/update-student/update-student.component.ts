@@ -23,7 +23,7 @@ export class UpdateStudentComponent implements OnInit {
 
   branchSelect="";
   studentSelect="";
-  stateSelect="";
+  stateSelect="AN";
   states=[];
   taskmapping={
     productSelected:{},

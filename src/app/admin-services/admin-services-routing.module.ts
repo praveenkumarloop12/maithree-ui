@@ -10,6 +10,8 @@ import { AddBranchComponent } from './add-branch/add-branch.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { AddStudentComponent } from './add-student/add-student.component';
 import { UpdateStudentComponent } from './update-student/update-student.component';
+import { AddTeacherComponent } from './add-teacher/add-teacher.component';
+import { UpdateTeacherComponent } from './update-teacher/update-teacher.component';
 
 export const routes: Routes = [
         { path: 'admin-dashboard', component: AdminServicesComponent, 
@@ -20,13 +22,16 @@ export const routes: Routes = [
            { path: 'add-branch', component: AddBranchComponent},
            { path: 'add-product', component: AddProductComponent},
            { path: 'add-student', component: AddStudentComponent},
-           { path: 'update-student', component: UpdateStudentComponent}
+           { path: 'update-student', component: UpdateStudentComponent},
+           { path: 'add-teacher', component: AddTeacherComponent},
+           { path: 'update-student', component: UpdateStudentComponent},
+           { path: 'update-teacher', component: UpdateTeacherComponent}
         ]},
   		
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash:true})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
   providers: []
 })

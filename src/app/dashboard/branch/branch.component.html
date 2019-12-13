@@ -1,12 +1,18 @@
-<div class="container">
+<div class="container-fluid">
 	<div class="row mt-4">
-		<div class="col-sm-3 mt-4" *ngFor="let b of branches; let i = index" (tap)="tapBranch(b)">
+
+			<div class="col-md-2 card mb-4 mt-4 ml-2 border-bottom-primary" *ngFor="let b of branches; let i = index" (tap)="tapBranch(b)">
+				<div class="card-body">
+						{{b.name}}
+				</div>
+			</div>
+		<!-- <div class="col-sm-3 mt-4" *ngFor="let b of branches; let i = index" (tap)="tapBranch(b)">
 			<div class="card text-white bg-primary bg-custom text-center card-custom" >
 				<div class="card-body">
 					<p class="card-text">{{b.name}}</p>
 				</div>
 			</div>
-		</div>		
+		</div>		 -->
 	</div>
 
 
