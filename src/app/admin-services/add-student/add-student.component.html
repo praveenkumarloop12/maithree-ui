@@ -30,7 +30,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="memberId">Teacher:</label>
           <div class="col-sm-12">
-            <select required [(ngModel)]="studentRequest.memberId" class="form-control" name="memberId"
+            <select required [disabled]="studentRequest.branchId==0" [(ngModel)]="studentRequest.memberId" class="form-control" name="memberId"
               #memberId="ngModel">
               <option style="text-align: center" disabled selected value="0">Select Teacher</option>
               <option *ngFor="let mem of teachersList;" [value]="mem.id" style="text-align: center">
@@ -45,7 +45,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="firstName">First Name:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.firstName" type="text" class="form-control"
+            <input required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.firstName" type="text" class="form-control"
               placeholder="Enter first name" name="firstName" #firstName="ngModel">
           </div>
         </div>
@@ -54,7 +54,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="middleName">Middle Name:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.middleName" type="text" class="form-control"
+            <input [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.middleName" type="text" class="form-control"
               placeholder="Enter middle name" name="middleName" #middleName="ngModel">
           </div>
         </div>
@@ -65,7 +65,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="lastName">Last Name:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.lastName" type="text" class="form-control"
+            <input required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.lastName" type="text" class="form-control"
               placeholder="Enter last name" name="lastName" #lastName="ngModel">
           </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="form-group">
           <label class="control-label col-sm-12" for="dob">Date of Birth:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.dob" type="date" class="form-control"
+            <input required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.dob" type="date" class="form-control"
               placeholder="Enter date of brith" name="dob" #dob="ngModel">
           </div>
         </div>
@@ -85,7 +85,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="guardainName">Guardian Name:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.guardainName" type="guardainName" class="form-control"
+            <input required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.guardainName" type="guardainName" class="form-control"
               placeholder="Enter guardian name" name="guardainName" #guardainName="ngModel">
           </div>
         </div>
@@ -94,7 +94,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="phoneNumber">Phone Number:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.phoneNumber" type="text" class="form-control"
+            <input required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.phoneNumber" type="text" class="form-control"
               placeholder="XXX XXXX XXX" name="phoneNumber" #phoneNumber="ngModel">
           </div>
         </div>
@@ -105,7 +105,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="emailAddress">Email Address:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.emailAddress" type="email" class="form-control"
+            <input required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.emailAddress" type="email" class="form-control"
               placeholder="Enter email id" name="emailAddress" #emailAddress="ngModel">
           </div>
         </div>
@@ -114,7 +114,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="state">State:</label>
           <div class="col-sm-12">
-            <select required [(ngModel)]="studentRequest.state" name="state" class="form-control" #state="ngModel">
+            <select required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.state" name="state" class="form-control" #state="ngModel">
               <option *ngFor="let state of states;" [value]="state.key"> {{state.name}}</option>
             </select>
           </div>
@@ -126,7 +126,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="address">Address:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.address" type="text" class="form-control"
+            <input required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.address" type="text" class="form-control"
               placeholder="Enter address" name="address" #address="ngModel">
           </div>
         </div>
@@ -138,11 +138,11 @@
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label class="btn btn-outline-primary" [ngClass]="{active: (studentRequest.gender=='M')}"
                 (click)="studentRequest.gender='M'">
-                <input type="radio" [(ngModel)]="studentRequest.gender" [value]="M" name="gender"> Male
+                <input type="radio" [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.gender" [value]="M" name="gender"> Male
               </label>
               <label class="btn btn-outline-primary" [ngClass]="{active: (studentRequest.gender=='F')}"
                 (click)="studentRequest.gender='F'">
-                <input type="radio" [(ngModel)]="studentRequest.gender" name="gender" [value]="F"> Female
+                <input type="radio" [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.gender" name="gender" [value]="F"> Female
               </label>
             </div>
           </div>
@@ -155,7 +155,7 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="pincode">Pincode:</label>
           <div class="col-sm-12">
-            <input required [(ngModel)]="studentRequest.pincode" type="text" class="form-control" placeholder="XXX XXX"
+            <input required [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="studentRequest.pincode" type="text" class="form-control" placeholder="XXX XXX"
               name="pincode" #pincode="ngModel" pattern="[0-9]{6}">
           </div>
         </div>
@@ -173,7 +173,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text">Product</span>
         </div>
-        <select [(ngModel)]="taskmapping.productSelected" name="productSelected"
+        <select [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="taskmapping.productSelected" name="productSelected"
           (change)="getTasksForSelectedProduct(taskmapping.productSelected)" class="form-control">
           <option value="0" selected disabled>Select Product</option>
           <option *ngFor="let product of productList;" [value]="product.id" style="text-align: center">
@@ -184,15 +184,14 @@
         <div class="input-group-prepend">
           <span class="input-group-text">Task</span>
         </div>
-        <select class="form-control" [(ngModel)]="taskmapping.taskSelected" name="taskSelected"
-          (change)="getSelectedTask()">
+        <select [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" class="form-control" [(ngModel)]="taskmapping.taskSelected" name="taskSelected" #taskSelected="ngModel">
           <option value="0" selected disabled>Select Task</option>
           <option *ngFor="let task of taskList;" [value]="task.id" style="text-align: center">
             {{task.name}}</option>
         </select>
       </div>
       <div class="input-group col-sm-2">
-        <button class="btn btn-primary" (click)="addTaskToStudent($event)">Add</button>
+        <button class="btn btn-primary" [disabled]="(taskmapping.productSelected == 0) || (taskmapping.taskSelected == 0)" (click)="addTaskToStudent($event)">Add</button>
       </div>
       <div class="col-sm-12">
         <hr>

@@ -31,8 +31,8 @@ export class AddStudentComponent implements OnInit {
 
   states = [];
   taskmapping = {
-    productSelected: {},
-    taskSelected: {}
+    productSelected: 0,
+    taskSelected: 0
   }
   studentRequest = new Student();
 
