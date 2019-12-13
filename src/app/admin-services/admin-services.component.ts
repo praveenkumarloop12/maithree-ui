@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 declare var $: any; 
 import {AppService} from '../services/app-services';
+import { AdminLoginComponent } from '../admin-login/admin-login.component';
 
 @Component({
   selector: 'app-admin-services',
@@ -10,9 +11,9 @@ import {AppService} from '../services/app-services';
 export class AdminServicesComponent implements OnInit {
 
   constructor(private service : AppService) { }
-
+  loggedInUserName : string = '';
   ngOnInit() {
-
+  this.loggedInUserName = window.sessionStorage.getItem('loggedInUserName');
 
     $('[data-toggle="offcanvas"]').on("click", function() {
       $('.sidebar-offcanvas').toggleClass('active')
