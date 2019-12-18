@@ -12,7 +12,7 @@
 	<div class="row">
 		<div class="card bg-primary ml-2 mb-2" style="width: 12rem;" *ngFor="let b of branches">
 		  <div class="card-body">
-		    <a href="/dashboard/branch/{{b.id}}/get-products" class="btn btn-primary">{{b.name}}</a>
+		    <a routerLink="/dashboard/branch/{{b.id}}/get-products" class="btn btn-primary">{{b.name}}</a>
 		  </div>
 		</div>
 	</div>
