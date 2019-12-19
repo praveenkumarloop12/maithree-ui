@@ -11,6 +11,7 @@ import { AddStudentComponent } from './add-student/add-student.component';
 import { UpdateStudentComponent } from './update-student/update-student.component';
 import { UpdateTeacherComponent } from './update-teacher/update-teacher.component';
 import { AddTeacherComponent } from './add-teacher/add-teacher.component';
+import { UpdateProductComponent } from './update-product/update-product.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { AddTeacherComponent } from './add-teacher/add-teacher.component';
     AddStudentComponent,
     UpdateStudentComponent,
     AddTeacherComponent,
-    UpdateTeacherComponent
+    UpdateTeacherComponent,
+    UpdateProductComponent
   ]
 })
 export class AdminServicesModule { }

@@ -1,3 +1,4 @@
+
 <div class="container card" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
   <div class="row">
     <div class="col-lg-12">
@@ -5,109 +6,14 @@
         <span style="float: right">
         
           <a style="border-radius: 40px;" class="tablinks btn btn-outline-primary"
-            routerLink="/admin-dashboard/update-product" >Update Product</a>
+            routerLink="/admin-dashboard/add-product" >Add Product</a>
         </span>
       </h4>
     </div>
   </div>
-  <hr>
-  <br />
-  <div id="AddProduct" *ngIf="addProduct">
-    <form>
-      <div class="row">
-        <div class="form-group col-lg-5">
-          <label>Product Name: </label>
-          <input type="text" class="form-control" placeholder="Enter Product Name" name="productRequestproductName"
-            id="productRequestproductName" [(ngModel)]="productRequest.productName">
-        </div>
-        <div class="form-group col-lg-5">
-          <label>Product Description: </label>
-          <input type="text" class="form-control" placeholder="Enter Product Description"
-            name="productRequestproductDescription" id="productRequestproductDescription"
-            [(ngModel)]="productRequest.productDescription">
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-lg-5">
-          <label>Select Branch: </label>
-          <select [(ngModel)]="branchSelect" class="form-control" name="branchSelect" (change)="getSelectedBranch()">
-            <option *ngFor="let branch of branchList; let i = index" [value]="i"> {{branch.name}}</option>
-          </select>
-        </div>
-        <div class="form-group col-lg-5">
-          <label class="checkbox-inline" style="margin-top: 30px;">
-            <input type="checkbox" [(ngModel)]="productRequest.isActivity" name="isActivity"
-              style="margin-right: 10px;">Activity
-          </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-lg-5">
-          <label>Selected: </label>
-          <div *ngFor="let branch of this.productRequest.branchDetails; let i = index">
-            {{branch.name}} <button (click)="removeBranch(branch)">X</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
 
-  <div class="row" style="margin-top: 15px;">
-    <div class="col-md-12">
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Task Name</th>
-            <th>Task Description</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let field of productRequest.tasks; let i = index">
-            <td>
-              <input [(ngModel)]="field.name" class="form-control" type="text" name="{{field.name}}" />
-            </td>
-            <td>
-              <input [(ngModel)]="field.description" class="form-control" type="text" name="{{field.description}}" />
-            </td>
-            <td width="150px">
-              <button class="glyphicon glyphicon-remove btn btn-default" type="button"
-                (click)="deleteFieldValue(i)">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input class="form-control" type="text" id="newAttributeTaskName" [(ngModel)]="newAttribute.name"
-                name="newAttributeTaskName" />
-            </td>
-            <td>
-              <input class="form-control" type="text" id="newAttributeTaskDesc" [(ngModel)]="newAttribute.description"
-                name="newAttributeTaskDesc" />
-            </td>
-            <td width="150px">
-              <button class=" btn btn-outline-primary" type="button" (click)="addFieldValue()">Add</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
 
-      <button type="button" class="btn btn-info" (click)="submitProduct(false)"
-        style="background-color: #16A085; float:right; margin-right:20px">
-        Submit
-      </button>
-
-      <div class="row" *ngIf="addSuccessMessage">
-        <div class="col-lg-9 alert alert-success alert-dismissible">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <h5 class="text-center" style="margin: auto 0" [style.color]="addSuccessMessage==true?'Green':'Red'">
-            {{responseMessage}}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="Update Product" *ngIf="updateProduct">
+<div id="Update Product">
   <form>
     <div class="container card" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
       <div class="row">
@@ -204,4 +110,5 @@
     </div>
   </div>
   </div>
+</div>
 </div>
