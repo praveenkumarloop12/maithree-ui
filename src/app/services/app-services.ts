@@ -12,6 +12,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { UrlService } from './url-config';
 import { ToastrService } from 'ngx-toastr';
 import { Teacher } from '../admin-services/add-teacher/teacher';
+import { Task } from '../models/task';
 
 
 
@@ -60,14 +61,18 @@ export class AppService {
 
     getSelectedProductDetails(productId: string) {
         return this.http.get(this.getBaseUrl() + "/admin/getProductDetails?productId=" + productId).map((response: Response) => {
-            console.log(response);
             return response;
         });
     }
 
     getSelectedStudentDetails(studentId: string) {
         return this.http.get(this.getBaseUrl() + "/student/" + studentId).map((response: Response) => {
-            console.log(response);
+            return response;
+        });
+    }
+
+    getTasksAndProductsByStudentID(id: number): Observable<Task[]> {
+        return this.http.get(this.getBaseUrl() + "/student/task/" + id).map((response: Task[]) => {
             return response;
         });
     }
