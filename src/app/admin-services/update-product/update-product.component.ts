@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../services/app-services';
 import * as _ from 'lodash';
 
-
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  selector: 'app-update-product',
+  templateUrl: './update-product.component.html',
+  styleUrls: ['./update-product.component.css']
 })
-export class AddProductComponent implements OnInit {
+export class UpdateProductComponent implements OnInit {
   constructor(private service: AppService) { }
 
   addSuccessMessage = false;
@@ -61,6 +60,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() {
     this.getBranchList();
+    this.showUpdateProduct();
   }
 
   getBranchList(){

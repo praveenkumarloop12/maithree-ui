@@ -12,6 +12,7 @@ import { AddStudentComponent } from './add-student/add-student.component';
 import { UpdateStudentComponent } from './update-student/update-student.component';
 import { AddTeacherComponent } from './add-teacher/add-teacher.component';
 import { UpdateTeacherComponent } from './update-teacher/update-teacher.component';
+import { UpdateProductComponent } from './update-product/update-product.component';
 
 export const routes: Routes = [
         { path: 'admin-dashboard', component: AdminServicesComponent, 
@@ -21,6 +22,7 @@ export const routes: Routes = [
         	 { path: 'target-configuration', component: TargetConfigurationComponent},
            { path: 'add-branch', component: AddBranchComponent},
            { path: 'add-product', component: AddProductComponent},
+           { path: 'update-product', component: UpdateProductComponent},
            { path: 'add-student', component: AddStudentComponent},
            { path: 'update-student', component: UpdateStudentComponent},
            { path: 'add-teacher', component: AddTeacherComponent},

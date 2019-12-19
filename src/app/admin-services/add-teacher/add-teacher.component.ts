@@ -13,31 +13,21 @@ export class AddTeacherComponent implements OnInit {
   ngOnInit() {
     this.getBranchList();
     this.newTeacher();
-    this.resetDisplayMessages();
   }
   initials = ['Mr.', 'Mrs.', 'Ms.', 'Miss.'];
 
   model: Teacher;
-  
-  displayMessage: boolean;
-  addSuccessMessage: boolean;
-  responseMessage: string;
   branchList = [];
 
   onSubmit(heroForm: any) {
-    this.displayMessage = true;
     this.service.addMember(this.model).subscribe(
       (data: any) => {
-      this.addSuccessMessage = true;
-      this.responseMessage = "Teacher Added Successfully";
       this.formReset(heroForm);
-      
+      this.service.showSuccess("Record created successfully");
     },error => {
-      this.addSuccessMessage = error.ok;
-      this.responseMessage = "Something went wrong, Please try again.";
       this.formReset(heroForm);
+      this.service.showError("Something went wrong, Please try again.");
     });
-    this.fadeDisplayMessages();
   }
 
   newTeacher() {
@@ -50,20 +40,8 @@ export class AddTeacherComponent implements OnInit {
     })
   }
 
-  fadeDisplayMessages() {
-    setTimeout(()=>{
-      this.resetDisplayMessages();
-    }, 3000);
-  }
-
-  resetDisplayMessages() {
-    this.displayMessage = false;
-    this.addSuccessMessage = false;
-    this.responseMessage = "";
-  }
-
   formReset(form: any) {
     this.newTeacher();
-    form.resetForm({ branch: this.model.branchId, initial: this.model.initial });
+    form.resetForm({ branch: this.model.branchId, initial: this.model.initial, isAdmin: 'N', isActive: 'Y' });
   }
 }
