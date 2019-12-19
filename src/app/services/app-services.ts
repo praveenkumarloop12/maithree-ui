@@ -124,8 +124,8 @@ export class AppService {
         });
     }
 
-    getStudentList(branchId: string) {
-        return this.http.get(this.getBaseUrl() + "/branches/" + branchId + "/getStudents").map((response: Response) => {
+    getStudentList(branchId: string, teacherId: string) {
+        return this.http.get(this.getBaseUrl() + "/branches/" + branchId + "/getStudents?teacherID="+ teacherId).map((response: Response) => {
             let studentList = response;
             return studentList;
         });

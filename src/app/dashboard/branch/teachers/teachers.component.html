@@ -7,7 +7,7 @@
 						<select class="custom-select custom-select-lg mb-4" [(ngModel)]="selectedTeacher"
 						formControlName="teacher" id="teacher">
 	            <option value="-1">Select</option>
-						  <option *ngFor="let t of teachersList" [ngValue]="t.code">{{t.name}}</option>
+						  <option *ngFor="let t of teachersList" [ngValue]="t.id">{{t.name}}</option>
 						</select>
 				  </div>
 				  <button [disabled]="selectedTeacher<0" class="btn btn-outline-primary btn-block" (click)="saveTecherInfo()">Next</button>
