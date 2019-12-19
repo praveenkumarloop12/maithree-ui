@@ -3,6 +3,7 @@ import { AppService } from '../../services/app-services';
 import { Branch } from '../../models/branch';
 import { States } from '../../models/states';
 import { Student } from '../../models/student';
+import { Task } from '../../models/task';
 
 @Component({
   selector: 'app-update-student',
@@ -27,7 +28,7 @@ export class UpdateStudentComponent implements OnInit {
   studentList = [];
 
   branchSelect = "";
-  stateSelect = "AN";
+  stateSelect = "TN";
   memberSelect = "";
   studentSelect = 0;
 
@@ -37,7 +38,6 @@ export class UpdateStudentComponent implements OnInit {
     taskSelected: 0
   }
   studentRequest = new Student();
-  productDetails = [];
 
   private studentsData;
   ngOnInit() {
@@ -66,11 +66,13 @@ export class UpdateStudentComponent implements OnInit {
     return that;
   }
   getBranchList(){
+    this.branchList = [];
     this.service.getBranches().subscribe((branches:any) =>  {
         this.branchList = branches;
     });
   }
   getAllStudents() {
+    this.studentList = [];
     this.service.getAllStudents().subscribe((students: any) => {
       this.studentList = students;
     });
@@ -80,19 +82,21 @@ export class UpdateStudentComponent implements OnInit {
     event.preventDefault();
     var tempMap = {}
     var that = this;
-    this.productList.forEach(function (product) {
+    that.productList.forEach(function (product) {
       if (product.id == that.taskmapping.productSelected) {
         tempMap['productName'] = product.name;
         tempMap['productId'] = product.id;
       }
     });
-    this.taskList.forEach(function (task) {
+    that.taskList.forEach(function (task) {
       if (task.id == that.taskmapping.taskSelected) {
         tempMap['taskName'] = task.name;
         tempMap['taskId'] = task.id;
       }
     });
-    this.studentRequest.tasks.push(tempMap);
+    let task = Task.createTask(0, tempMap['taskId'], tempMap['taskName'], tempMap['productId'], tempMap['productName']);
+    
+    that.studentRequest.tasks.push(task);
   }
 
   getBranchById(id: number): Branch {
@@ -110,53 +114,79 @@ export class UpdateStudentComponent implements OnInit {
     if (this.studentList != null || this.studentList != undefined) {
       this.studentList.forEach(br => {
         if (br.student_id == id) {
-          that = Student.studentDBMapper(br);
+          return that = Student.studentDBMapper(br);
         }
       });
     }
     return that;
   }
 
+  populateTasksAndProductsByStudentID(id: number) {
+    this.service.getTasksAndProductsByStudentID(id).subscribe((task: Task[]) => {
+      this.studentRequest.tasks = task;
+    });
+  }
+
   getStudent(event: any) {
     let student = this.getStudentById(event);
     this.studentRequest = student;
+    this.studentRequest.tasks = [];
+    this.populateTasksAndProductsByStudentID(event);
+    this.service.getTeachersList(student.branchId.toString()).subscribe((teachersList: any) => {
+      this.teachersList = teachersList;
+    });
+
     this.service.getProductsDetailsForBranch(student.branchId.toString()).subscribe((products: any) => {
-      this.productDetails = products;
       this.productList = [];
-      this.productDetails.forEach(pro => {
-        this.productList.push(pro);
-      });
-      this.service.getTeachersList(student.branchId.toString()).subscribe((teachersList: any) => {
-        this.teachersList = teachersList;
-      });
+      this.productList = products;
     });
   }
 
   getDetailsForSelectedBranch(event: any) {
     let branch = this.getBranchById(event);
     this.studentRequest.memberId = 0;
-    this.service.getProductsDetailsForBranch(branch.id.toString()).subscribe((products: any) => {
-      this.productDetails = products;
-      this.productList = [];
-      this.productDetails.forEach(pro => {
-        this.productList.push(pro);
-      });
-      this.service.getTeachersList(branch.id.toString()).subscribe((teachersList: any) => {
+    this.productList = [];
+    if (branch == null || branch == undefined || event == 0) {
+      return;
+    }
+    this.service.getProductsDetailsForBranch(event).subscribe((products: any) => {
+      this.productList = products;
+      this.service.getTeachersList(event).subscribe((teachersList: any) => {
         this.teachersList = teachersList;
       });
     });
   }
+  getProductById(id: number): any {
+    let pro: any;
+    if (this.productList != null || this.productList != undefined) {
+      this.productList.forEach(br => {
+        if (br.id == id) pro = br;
+      });
+    }
+    return pro;
+  }
 
-  getTasksForSelectedProduct(product) {
-    var that = this;
+  canListTask(id: number): boolean {
+    let res = true;
+    let that = this;
+    let tasks = that.studentRequest.tasks;
+    if (tasks != null && tasks != undefined) {
+      tasks.forEach(br => {
+        if (br.taskId == id) res = false;
+      })
+    }
+    return res;
+  }
+
+  getTasksForSelectedProduct(event: any) {
+    let that = this;
     that.taskList = [];
-    this.productDetails.forEach(function (productDetail) {
-      if (productDetail.id == product) {
-        productDetail.tasks.forEach(function (taskDetail) {
-          that.taskList.push(taskDetail)
-        })
+    let productDetail = that.getProductById(event.target.value);
+    productDetail.tasks.forEach(function (taskDetail) {
+      if (that.canListTask(taskDetail.id)) {
+        that.taskList.push(taskDetail);
       }
-    })
+    });
   }
 
   deleteFieldValue(index) {
@@ -176,7 +206,8 @@ export class UpdateStudentComponent implements OnInit {
 
   formReset(form: any) {
     this.studentRequest = new Student();
-    form.resetForm({ stu: 0, branchId: this.studentRequest.branchId, memberId: this.studentRequest.memberId, state: this.studentRequest.state, gender: this.studentRequest.gender});
+    form.resetForm({ stu: 0, branchId: this.studentRequest.branchId, memberId: this.studentRequest.memberId, 
+      state: this.studentRequest.state, gender: this.studentRequest.gender, taskSelected: 0, productselect: 0});
     this.ngOnInit();
   }
 }

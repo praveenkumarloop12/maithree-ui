@@ -16,9 +16,9 @@ export class Student {
     dob: string;
     branchId: number;
     memberId: number;
-    tasks: any;
+    tasks: Task[];
     constructor() {
-        this.state = "AN";
+        this.state = "TN";
         this.branchId = 0;
         this.memberId = 0;
         this.gender = "M";

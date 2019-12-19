@@ -32,8 +32,8 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="branchId">Branch:</label>
           <div class="col-sm-12">
-            <select required [disabled]="studentSelect==0" [(ngModel)]="studentRequest.branchId" class="form-control" name="branchId"
-              (ngModelChange)="getDetailsForSelectedBranch($event)" #branchId="ngModel">
+            <select required [disabled]="studentSelect==0" [(ngModel)]="studentRequest.branchId" class="form-control"
+              name="branchId" (ngModelChange)="getDetailsForSelectedBranch($event)" #branchId="ngModel">
               <option style="text-align: center" disabled selected value="0">Select Branch</option>
               <option *ngFor="let branch of branchList;" [value]="branch.id" style="text-align: center">
                 {{branch.name}}</option>
@@ -185,6 +185,69 @@
               #pincode="ngModel" pattern="[0-9]{6}">
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row"
+      style="background: #f1f1f1;border-radius: 15px;margin-top: 10px; margin-bottom: 20px;">
+      <div class="col-sm-12">
+        Assign task
+        <hr>
+      </div>
+
+      <div class="input-group col-sm-5">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Product</span>
+        </div>
+        <select [disabled]="(studentRequest.memberId==0) || (studentRequest.branchId==0)" [(ngModel)]="taskmapping.productSelected" name="productselect"
+          (change)="getTasksForSelectedProduct($event)" class="form-control" #productselect="ngModel">
+          <option value="0" selected disabled>Select Product</option>
+          <option *ngFor="let product of productList;" [value]="product.id" style="text-align: center">
+            {{product.name}}</option>
+        </select>
+      </div>
+      <div class="input-group col-sm-5">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Task</span>
+        </div>
+        <select [disabled]="taskmapping.productSelected==0" class="form-control" 
+        [(ngModel)]="taskmapping.taskSelected" name="taskSelected" #taskSelected="ngModel">
+          <option value="0" selected disabled>Select Task</option>
+          <option *ngFor="let task of taskList;" [value]="task.id" style="text-align: center">
+            {{task.name}}</option>
+        </select>
+      </div>
+      <div class="input-group col-sm-2">
+        <button class="btn btn-primary" [disabled]="(taskmapping.productSelected == 0) || (taskmapping.taskSelected == 0)" 
+        (click)="addTaskToStudent($event)">Add</button>
+      </div>
+      <div class="col-sm-12">
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Task Details</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let field of studentRequest.tasks; let i = index">
+              <td>
+                <input [(ngModel)]="field.productName" class="form-control" type="text" name="pn{{field.productName}}"/>
+              </td>
+              <td>
+                <input [(ngModel)]="field.taskName" class="form-control" type="text" name="tn{{field.taskName}}" />
+              </td>
+              <td>
+                <button class="btn btn-outline-danger" type="button" (click)="deleteFieldValue(i)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div class="row">

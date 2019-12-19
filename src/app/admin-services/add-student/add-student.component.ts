@@ -3,6 +3,7 @@ import { AppService } from '../../services/app-services';
 import { Branch } from '../../models/branch';
 import { States } from '../../models/states';
 import { Student } from '../../models/student';
+import { Task } from '../../models/task';
 
 @Component({
   selector: 'app-add-student',
@@ -26,7 +27,7 @@ export class AddStudentComponent implements OnInit {
   teachersList = [];
 
   branchSelect = "";
-  stateSelect = "AN";
+  stateSelect = "TN";
   memberSelect = "";
 
   states = [];
@@ -71,7 +72,8 @@ export class AddStudentComponent implements OnInit {
         tempMap['taskId'] = task.id;
       }
     });
-    this.studentRequest.tasks.push(tempMap);
+    let task = Task.createTask(0, tempMap['taskId'], tempMap['taskName'], tempMap['productId'], tempMap['productName']);
+    this.studentRequest.tasks.push(task);
   }
 
   getBranchById(id: number): Branch {
