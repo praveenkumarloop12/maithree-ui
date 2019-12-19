@@ -81,9 +81,11 @@ export class AddProductComponent implements OnInit {
     }
     this.service.addProduct(this.productRequest).subscribe((resp:any) =>  {
       if(resp.status) {
-        that.responseMessage = "Product Updated Successfully";
+        //that.responseMessage = "Product Updated Successfully";
+        this.service.showSuccess('Product Updated Successfully');
       } else {
-        that.responseMessage = "Please enter valid details to add product";
+        //that.responseMessage = "Please enter valid details to add product";
+        this.service.showError('Please enter valid details to add product');
       }
       console.log(resp);
       that.resetFields();
@@ -107,9 +109,11 @@ export class AddProductComponent implements OnInit {
     }
     this.service.editProduct(this.productRequest).subscribe((resp:any) =>  {
       if(resp.status){
-        that.responseMessage = "Product Updated Successfully";
+        //that.responseMessage = "Product Updated Successfully";
+        this.service.showSuccess('Product Updated Successfully');
       } else {
-        that.responseMessage = "Please enter valid details to update product";
+        this.service.showError('Please enter valid details to add product');
+        //that.responseMessage = "Please enter valid details to update product";
       }
       console.log(resp);
       that.resetFields();

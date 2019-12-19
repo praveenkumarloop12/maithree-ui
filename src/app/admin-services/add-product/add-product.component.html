@@ -1,7 +1,7 @@
 <div class="container card" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
   <div class="row">
     <div class="col-lg-12">
-      <h4 style="margin: auto 0">Manage Product
+      <h4 style="margin: auto 0">Add Product
         <span style="float: right">
         
           <a style="border-radius: 40px;" class="tablinks btn btn-outline-primary"
@@ -31,6 +31,7 @@
         <div class="form-group col-lg-5">
           <label>Select Branch: </label>
           <select [(ngModel)]="branchSelect" class="form-control" name="branchSelect" (change)="getSelectedBranch()">
+            <option value="0">Choose Branch</option>
             <option *ngFor="let branch of branchList; let i = index" [value]="i"> {{branch.name}}</option>
           </select>
         </div>
@@ -45,7 +46,7 @@
         <div class="form-group col-lg-5">
           <label>Selected: </label>
           <div *ngFor="let branch of this.productRequest.branchDetails; let i = index">
-            {{branch.name}} <button (click)="removeBranch(branch)">X</button>
+            {{branch.name}} <button class="btn btn-outline-danger" (click)="removeBranch(branch)">X</button>
           </div>
         </div>
       </div>
@@ -96,112 +97,7 @@
         Submit
       </button>
 
-      <div class="row" *ngIf="addSuccessMessage">
-        <div class="col-lg-9 alert alert-success alert-dismissible">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <h5 class="text-center" style="margin: auto 0" [style.color]="addSuccessMessage==true?'Green':'Red'">
-            {{responseMessage}}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="Update Product" *ngIf="updateProduct">
-  <form>
-    <div class="container card" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
-      <div class="row">
-        <div class="form-group col-sm-5">
-          <label class="control-label col-sm-4">Product Name: </label>
-          <div class="col-sm-12">
-          <select class="form-control" [(ngModel)]="productSelect" name="productSelect"
-            (change)="getSelectedProductDetails()">
-            <option *ngFor="let product of productList; let i = index" [value]="i"> {{product.name}}</option>
-          </select>
-          </div>
-        </div>
-        <div class="form-group col-sm-5">
-          <label class="control-label col-sm-3">Branch: </label>
-          <div class="col-sm-12">
-          <select class="form-control" [(ngModel)]="branchSelect" name="branchSelect" (change)="getSelectedBranch()">
-            <option *ngFor="let branch of branchList; let i = index" [value]="i"> {{branch.name}}</option>
-          </select>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-sm-5">
-          <label class="control-label col-sm-4">Selected: </label>
-          <div class="col-sm-12">
-          <div *ngFor="let branch of this.productRequest.branchDetails; let i = index">
-            {{branch.name}} <button type="button" class="btn btn-outline-danger"
-              (click)="removeBranch(branch)">X</button>
-          </div>
-          </div>
-        </div>
-        <div class="form-group col-sm-2" style="text-align: center;">
-          <label class="control-label checkbox-inline">
-            <input type="checkbox" [(ngModel)]="productRequest.isActivity" name="isActivity"
-              style="margin-right: 10px;">Activity
-          </label>
-        </div>
-      </div>
-    </div>
-  </form>
-
-<div class="container card" style="border: #e3e3e3 solid 1px;padding: 20px 40px;">
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Task Name</th>
-            <th>Task Description</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let field of productRequest.tasks; let i = index">
-            <td>
-              <input [(ngModel)]="field.name" class="form-control" type="text" name="{{field.name}}" />
-            </td>
-            <td>
-              <input [(ngModel)]="field.description" class="form-control" type="text" name="{{field.description}}" />
-            </td>
-            <td width="150px">
-              <button class="btn btn-outline-danger" type="button" (click)="deleteFieldValue(i)">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input class="form-control" type="text" id="newAttributeTaskName" [(ngModel)]="newAttribute.name"
-                name="newAttributeTaskName" />
-            </td>
-            <td>
-              <input class="form-control" type="text" id="newAttributeTaskDesc" [(ngModel)]="newAttribute.description"
-                name="newAttributeTaskDesc" />
-            </td>
-            <td width="150px">
-              <button class="btn btn-outline-primary" type="button" (click)="addFieldValue()">Add</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <button type="button" class="btn btn-info" (click)="submitProduct(true)"
-        style="background-color: #16A085; float:right; margin-right:20px">
-        Submit
-      </button>
-
-      <div class="row" *ngIf="updateSuccessMessage">
-        <div class="col-lg-9 alert alert-success alert-dismissible">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <h5 class="text-center" style="margin: auto 0" [style.color]="updateSuccessMessage==true?'Green':'Red'">
-            {{responseMessage}}</h5>
-        </div>
-      </div>
 
     </div>
-  </div>
   </div>
 </div>
