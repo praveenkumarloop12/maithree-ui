@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../services/app-services';
+import { Branch } from '../../models/branch';
+import { States } from '../../models/states';
+import { Student } from '../../models/student';
+import { Task } from '../../models/task';
 
 @Component({
   selector: 'app-update-student',
@@ -10,193 +14,36 @@ export class UpdateStudentComponent implements OnInit {
 
   constructor(private service: AppService) { }
 
-  branches=[];
-  selectedBranch="";
+  branches = [];
+  selectedBranch = "";
 
   displayMessage = false;
   addSuccessMessage = false;
   responseMessage = "";
 
-  branchList=[];
-  productList=[];
-  taskList =[];
+  branchList = [];
+  productList = [];
+  taskList = [];
+  teachersList = [];
+  studentList = [];
 
-  branchSelect="";
-  studentSelect="";
-  stateSelect="AN";
-  states=[];
-  taskmapping={
-    productSelected:{},
-    taskSelected:{}
-  }
-  studentRequest= {
-    "firstName": "",
-    "middleName": "",
-    "lastName": "",
-    "nickName": "",
-    "guardainName": "",
-    "phoneNumber": "",
-    "emailAddress": "",
-    "address": "",
-    "state": "",
-    "pincode": "",
-    "gender": "",
-    "dob": "",
-    "branchId":"",
-    "tasks": [
-    ]
-  }
+  branchSelect = "";
+  stateSelect = "TN";
+  memberSelect = "";
+  studentSelect = 0;
 
-  productDetails=[];
+  states = [];
+  taskmapping = {
+    productSelected: 0,
+    taskSelected: 0
+  }
+  studentRequest = new Student();
+
   private studentsData;
   ngOnInit() {
     this.getBranchList();
-    this.states = [
-        {
-        "key": "AN",
-        "name": "Andaman and Nicobar Islands"
-        },
-        {
-        "key": "AP",
-        "name": "Andhra Pradesh"
-        },
-        {
-        "key": "AR",
-        "name": "Arunachal Pradesh"
-        },
-        {
-        "key": "AS",
-        "name": "Assam"
-        },
-        {
-        "key": "BR",
-        "name": "Bihar"
-        },
-        {
-        "key": "CG",
-        "name": "Chandigarh"
-        },
-        {
-        "key": "CH",
-        "name": "Chhattisgarh"
-        },
-        {
-        "key": "DH",
-        "name": "Dadra and Nagar Haveli"
-        },
-        {
-        "key": "DD",
-        "name": "Daman and Diu"
-        },
-        {
-        "key": "DL",
-        "name": "Delhi"
-        },
-        {
-        "key": "GA",
-        "name": "Goa"
-        },
-        {
-        "key": "GJ",
-        "name": "Gujarat"
-        },
-        {
-        "key": "HR",
-        "name": "Haryana"
-        },
-        {
-        "key": "HP",
-        "name": "Himachal Pradesh"
-        },
-        {
-        "key": "JK",
-        "name": "Jammu and Kashmir"
-        },
-        {
-        "key": "JH",
-        "name": "Jharkhand"
-        },
-        {
-        "key": "KA",
-        "name": "Karnataka"
-        },
-        {
-        "key": "KL",
-        "name": "Kerala"
-        },
-        {
-        "key": "LD",
-        "name": "Lakshadweep"
-        },
-        {
-        "key": "MP",
-        "name": "Madhya Pradesh"
-        },
-        {
-        "key": "MH",
-        "name": "Maharashtra"
-        },
-        {
-        "key": "MN",
-        "name": "Manipur"
-        },
-        {
-        "key": "ML",
-        "name": "Meghalaya"
-        },
-        {
-        "key": "MZ",
-        "name": "Mizoram"
-        },
-        {
-        "key": "NL",
-        "name": "Nagaland"
-        },
-        {
-        "key": "OR",
-        "name": "Odisha"
-        },
-        {
-        "key": "PY",
-        "name": "Puducherry"
-        },
-        {
-        "key": "PB",
-        "name": "Punjab"
-        },
-        {
-        "key": "RJ",
-        "name": "Rajasthan"
-        },
-        {
-        "key": "SK",
-        "name": "Sikkim"
-        },
-        {
-        "key": "TN",
-        "name": "Tamil Nadu"
-        },
-        {
-        "key": "TS",
-        "name": "Telangana"
-        },
-        {
-        "key": "TR",
-        "name": "Tripura"
-        },
-        {
-        "key": "UK",
-        "name": "Uttar Pradesh"
-        },
-        {
-        "key": "UP",
-        "name": "Uttarakhand"
-        },
-        {
-        "key": "WB",
-        "name": "West Bengal"
-        }
-        ]
+    this.getAllStudents();
+    this.states = States.getStates();
   }
 
   private newAttribute: any = {};
@@ -205,109 +52,162 @@ export class UpdateStudentComponent implements OnInit {
       this.studentRequest.tasks.push(this.newAttribute);
       this.newAttribute = {};
   }
-
+  getName(stu: any): string {
+    let that = "";
+    if (stu != null || stu != undefined) {
+      if (stu.last_name != null && stu.last_name != undefined) {
+        that = stu.last_name;
+        that = that.concat(", ");
+      }
+      if (stu.first_name != null && stu.first_name != undefined) {
+        that = that.concat(stu.first_name);
+      }
+    }
+    return that;
+  }
   getBranchList(){
-    console.log("Branch in student")
-      this.service.getBranches().subscribe((branches:any) =>  {
+    this.branchList = [];
+    this.service.getBranches().subscribe((branches:any) =>  {
         this.branchList = branches;
-      })
-  }
-
-  getSelectedTask(data){
-    console.log("check for value", data);
-    console.log("taskmapping", this.taskmapping);
-  }
-
-  addTaskToStudent(){
-    console.log("that.productList",this.productList)
-    console.log("that.taskList",this.taskList)
-    console.log("this.productDetails",this.productDetails)
-    var tempMap={}
-    var that=this;
-    this.productList.forEach(function(product){
-      if(product.id == that.taskmapping.productSelected){
-        tempMap['productName']=product.name;
-        tempMap['productId']=product.id;
-      }
-    })
-    this.taskList.forEach(function(task){
-      if(task.id == that.taskmapping.taskSelected){
-        tempMap['taskName']=task.name;
-        tempMap['taskId']=task.id;
-      }
-    })
-    this.studentRequest.tasks.push(tempMap);
-  }
-
-  getDetailsForSelectedBranch(){
-    var that = this;
-    var branchSelected = this.branchSelect;
-    var branchId = this.branchList[branchSelected].id;
-    this.service.getStudentList(branchId).subscribe((studentList:any)=> {
-      this.studentsData = studentList;
     });
-    this.service.getProductsDetailsForBranch(branchId).subscribe((products:any) =>  {
-      that.productDetails = products;
-
-      that.productList = [];
-      this.productDetails.forEach(function(product){
-        that.productList.push(product)
-      })
-    })
-
-    this.studentRequest.branchId = this.branchList[branchSelected].id;
   }
-  getDetailsForSelectedStudent(){
-    var that = this;
-    var studentSelected = this.studentSelect;
-    var studentId = this.studentsData[studentSelected].studentId;
-    console.log("studentId", studentId);
-    this.service.getSelectedStudentDetails(studentId).subscribe((student:any)=> {
-      console.log("student",student);
-      this.studentRequest = student;
-      this.studentRequest.branchId = this.branchList[this.branchSelect].id;
-    })
+  getAllStudents() {
+    this.studentList = [];
+    this.service.getAllStudents().subscribe((students: any) => {
+      this.studentList = students;
+    });
   }
 
-  getTasksForSelectedProduct(product){
+  addTaskToStudent(event: Event) {
+    event.preventDefault();
+    var tempMap = {}
     var that = this;
-    console.log("product",product)
-    that.taskList = [];
-    this.productDetails.forEach(function(productDetail){
-      if(productDetail.id == product){
-        productDetail.tasks.forEach(function(taskDetail){
-          that.taskList.push(taskDetail)
-        })
+    that.productList.forEach(function (product) {
+      if (product.id == that.taskmapping.productSelected) {
+        tempMap['productName'] = product.name;
+        tempMap['productId'] = product.id;
       }
-      console.log("that.taskList",that.taskList)
-    })
+    });
+    that.taskList.forEach(function (task) {
+      if (task.id == that.taskmapping.taskSelected) {
+        tempMap['taskName'] = task.name;
+        tempMap['taskId'] = task.id;
+      }
+    });
+    let task = Task.createTask(0, tempMap['taskId'], tempMap['taskName'], tempMap['productId'], tempMap['productName']);
+    
+    that.studentRequest.tasks.push(task);
+  }
+
+  getBranchById(id: number): Branch {
+    let branch = new Branch();
+    if (this.branchList != null || this.branchList != undefined) {
+      this.branchList.forEach(br => {
+        if (br.id == id) branch = br;
+      });
+    }
+    return branch;
+  }
+
+  getStudentById(id: number): Student {
+    let that = new Student();
+    if (this.studentList != null || this.studentList != undefined) {
+      this.studentList.forEach(br => {
+        if (br.student_id == id) {
+          return that = Student.studentDBMapper(br);
+        }
+      });
+    }
+    return that;
+  }
+
+  populateTasksAndProductsByStudentID(id: number) {
+    this.service.getTasksAndProductsByStudentID(id).subscribe((task: Task[]) => {
+      this.studentRequest.tasks = task;
+    });
+  }
+
+  getStudent(event: any) {
+    let student = this.getStudentById(event);
+    this.studentRequest = student;
+    this.studentRequest.tasks = [];
+    this.populateTasksAndProductsByStudentID(event);
+    this.service.getTeachersList(student.branchId.toString()).subscribe((teachersList: any) => {
+      this.teachersList = teachersList;
+    });
+
+    this.service.getProductsDetailsForBranch(student.branchId.toString()).subscribe((products: any) => {
+      this.productList = [];
+      this.productList = products;
+    });
+  }
+
+  getDetailsForSelectedBranch(event: any) {
+    let branch = this.getBranchById(event);
+    this.studentRequest.memberId = 0;
+    this.productList = [];
+    if (branch == null || branch == undefined || event == 0) {
+      return;
+    }
+    this.service.getProductsDetailsForBranch(event).subscribe((products: any) => {
+      this.productList = products;
+      this.service.getTeachersList(event).subscribe((teachersList: any) => {
+        this.teachersList = teachersList;
+      });
+    });
+  }
+  getProductById(id: number): any {
+    let pro: any;
+    if (this.productList != null || this.productList != undefined) {
+      this.productList.forEach(br => {
+        if (br.id == id) pro = br;
+      });
+    }
+    return pro;
+  }
+
+  canListTask(id: number): boolean {
+    let res = true;
+    let that = this;
+    let tasks = that.studentRequest.tasks;
+    if (tasks != null && tasks != undefined) {
+      tasks.forEach(br => {
+        if (br.taskId == id) res = false;
+      })
+    }
+    return res;
+  }
+
+  getTasksForSelectedProduct(event: any) {
+    let that = this;
+    that.taskList = [];
+    let productDetail = that.getProductById(event.target.value);
+    productDetail.tasks.forEach(function (taskDetail) {
+      if (that.canListTask(taskDetail.id)) {
+        that.taskList.push(taskDetail);
+      }
+    });
   }
 
   deleteFieldValue(index) {
     this.studentRequest.tasks.splice(index, 1);
   }
 
-  getSelectedState(){
-  console.log(this.stateSelect)
-    this.studentRequest.state = this.stateSelect
-  }
+  onSubmit(studentForm: any) {
+    this.service.editStudent(this.studentRequest).subscribe(
+      (data: any) => {
+      this.formReset(studentForm);
+      this.service.showSuccess("Record created successfully");
+    },error => {
+      this.formReset(studentForm);
+      this.service.showError("Something went wrong, Please try again.");
+    });
+  };
 
-  getSelectedGender(event){
-  console.log(event.target.value)
-    this.studentRequest.gender = event.target.value
-  }
-
-  submitStudent(){
-    var that = this;
-    this.service.editStudent(this.studentRequest).subscribe((resp:any) =>  {
-      that.displayMessage = true;
-      that.addSuccessMessage = resp.status;
-      if(resp.status){
-        that.responseMessage = "Student Updated Successfully";
-      } else {
-        that.responseMessage = "Please enter valid details to add student";
-      }
-      console.log(resp,that.addSuccessMessage);
-    })
+  formReset(form: any) {
+    this.studentRequest = new Student();
+    form.resetForm({ stu: 0, branchId: this.studentRequest.branchId, memberId: this.studentRequest.memberId, 
+      state: this.studentRequest.state, gender: this.studentRequest.gender, taskSelected: 0, productselect: 0});
+    this.ngOnInit();
   }
 }

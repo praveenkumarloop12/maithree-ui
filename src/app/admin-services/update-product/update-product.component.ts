@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../services/app-services';
 import * as _ from 'lodash';
 
-
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  selector: 'app-update-product',
+  templateUrl: './update-product.component.html',
+  styleUrls: ['./update-product.component.css']
 })
-export class AddProductComponent implements OnInit {
+export class UpdateProductComponent implements OnInit {
   constructor(private service: AppService) { }
 
   addSuccessMessage = false;
@@ -61,6 +60,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() {
     this.getBranchList();
+    this.showUpdateProduct();
   }
 
   getBranchList(){
@@ -81,11 +81,12 @@ export class AddProductComponent implements OnInit {
     }
     this.service.addProduct(this.productRequest).subscribe((resp:any) =>  {
       if(resp.status) {
-        //that.responseMessage = "Product Updated Successfully";
         this.service.showSuccess('Product Updated Successfully');
+        
+       // that.responseMessage = "Product Updated Successfully";
       } else {
-        //that.responseMessage = "Please enter valid details to add product";
         this.service.showError('Please enter valid details to add product');
+        //that.responseMessage = "Please enter valid details to add product";
       }
       console.log(resp);
       that.resetFields();
@@ -109,11 +110,12 @@ export class AddProductComponent implements OnInit {
     }
     this.service.editProduct(this.productRequest).subscribe((resp:any) =>  {
       if(resp.status){
-        //that.responseMessage = "Product Updated Successfully";
+       // that.responseMessage = "Product Updated Successfully";
         this.service.showSuccess('Product Updated Successfully');
+      
       } else {
-        this.service.showError('Please enter valid details to add product');
         //that.responseMessage = "Please enter valid details to update product";
+        this.service.showError('Please enter valid details to add product');
       }
       console.log(resp);
       that.resetFields();

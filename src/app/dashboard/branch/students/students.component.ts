@@ -49,9 +49,11 @@ export class StudentsComponent implements OnInit {
     }
 
     getStudentList(id: string) {
-  		this.service.getStudentList(id).subscribe((studentList:any)=> {
-  			this.studentsData = studentList;
-  		})
+      this.service.getDataFromBrowser('selectedTeacher', (teacherData) => {
+        this.service.getStudentList(id, teacherData).subscribe((studentList:any)=> {
+          this.studentsData = studentList;
+        })
+      });
     }
 
     getProductList(id: string) {

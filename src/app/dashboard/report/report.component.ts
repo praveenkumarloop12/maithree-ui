@@ -134,7 +134,7 @@ export class ReportComponent implements OnInit {
     var branchSelected = this.branchSelect;
     var branchId = this.branchList[branchSelected].id;
     this.branchIDValue = branchId
-    this.service.getStudentList(branchId).subscribe((studentList:any)=> {
+    this.service.getStudentList(branchId, '').subscribe((studentList:any)=> {
       this.studentsData = studentList;
     });
     console.log(this.studentsData);
