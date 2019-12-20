@@ -41,10 +41,13 @@ export class AuthenticationComponent implements OnInit {
 
 
   authenticateUser(){
-  	this.service.login(this.user).subscribe(resp => {
+let user = this.user;
+  	this.service.login(user).subscribe(resp => {
+   
       if(resp['token']) {
         window.localStorage.setItem('mi3userToken',resp['token']);
         window.sessionStorage.setItem('isAdmin',resp['isAdmin']);
+        window.sessionStorage.setItem('loggedInUserName',user.username);
         setTimeout(()=>{
           if(resp['isAdmin'] =='Y') 
             this.router.navigateByUrl("/admin-dashboard/home");
